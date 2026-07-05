@@ -4,7 +4,7 @@ config_version=5
 [application]
 
 config/name="Xibalba - El Camino del Miedo"
-config/features=PackedStringArray("4.3")
+config/features=PackedStringArray("4.7")
 
 [autoload]
 
