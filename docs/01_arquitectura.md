@@ -28,10 +28,34 @@ Señales globales (UI y entorno solo se suscriben aquí):
 
 Prohibido para UI: refs directas a nodos de lógica, `get_node("/root/Player")`.
 
-## 3. DidacticManager
-- Pausa por software: estado `MEDITATING` al interactuar con altares (Xoloitzcuintles, Colibríes).
-- Muestra poemas prehispánicos (Nezahualcóyotl) desde Resources de texto.
-- Durante lectura: inmunidad temporal. Al completar: Serenidad → 100%.
+## 3. DidacticManager (Módulo 3)
+Pausa Segura por Software — **prohibido** `get_tree().paused = true` (congelaría animaciones de UI).
+
+```
+[Interacción con Altar] ──► EventBus.artifact_read_started(id, text)
+        ▼
+[PlayerState → MEDITATING]
+  - inputs de movimiento/ataque deshabilitados
+  - invulnerable: hurtbox.monitoring = false
+        ▼
+[UI despliega Códice] — lee el PoemResource
+        ▼
+[Jugador presiona "Cerrar"]
+  - Serenidad → 100%
+  - EventBus.artifact_read_completed()
+  - PlayerState → IDLE
+```
+
+Altares: Xoloitzcuintles y Colibríes. Poemas prehispánicos (Nezahualcóyotl).
+
+### PoemResource (extends Resource, class_name PoemResource)
+| Campo | Tipo | Ejemplo/Default |
+|---|---|---|
+| artifact_id | String | "XOLO_01" |
+| title | String | "Canto de la Huida" |
+| author | String | "Nezahualcóyotl" |
+| content_text | String | cuerpo del poema |
+| serenity_restored | float | 100.0 |
 
 ## Patrones obligatorios
 - FSM: cada estado = nodo hijo de `State` (`enter()`, `exit()`, `physics_update(delta: float)`). Sin booleanos de estado.
