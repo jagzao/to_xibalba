@@ -1,0 +1,17 @@
+# Godot 4
+.godot/
+*.import
+export_presets.cfg
+
+# Obsidian (config local, no notas)
+.obsidian/workspace*.json
+.obsidian/cache
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# OS
+Thumbs.db
+.DS_Store
