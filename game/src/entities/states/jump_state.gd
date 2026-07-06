@@ -12,5 +12,8 @@ func physics_update(delta: float) -> void:
 	var c := actor as CharacterBase
 	c.velocity.x = c.input_axis * c.stats.speed
 	c.apply_gravity(delta)
+	if c.dash_pressed:
+		finished.emit("Dash")
+		return
 	if c.velocity.y >= 0.0:
 		finished.emit("Fall")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://src/entities/character_base.gd" id="1"]
 [ext_resource type="Script" path="res://src/core/finite_state_machine.gd" id="2"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://src/entities/states/move_state.gd" id="8"]
 [ext_resource type="Script" path="res://src/entities/states/jump_state.gd" id="9"]
 [ext_resource type="Script" path="res://src/entities/states/fall_state.gd" id="10"]
+[ext_resource type="Script" path="res://src/entities/states/dash_state.gd" id="11"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
 size = Vector2(16, 32)
@@ -18,6 +19,11 @@ size = Vector2(16, 32)
 script = ExtResource("1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("RectangleShape2D_1")
 
 [node name="FiniteStateMachine" type="Node" parent="."]
@@ -34,6 +40,9 @@ script = ExtResource("9")
 
 [node name="Fall" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("10")
+
+[node name="Dash" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("11")
 
 [node name="Stunned" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("4")

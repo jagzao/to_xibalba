@@ -38,3 +38,11 @@ Formato por sesión:
 - Señales nuevas en EventBus: ninguna. Dependencias nuevas: ninguna.
 - Tests: 49/49 verdes.
 - Deuda pendiente: falta DashState (12 i-frames Ixbalanqué), PanicState, animaciones (AnimatedSprite2D con spritesheets de Hunahpú cuando se suban), GoreDataResource sin implementar.
+
+## 2026-07-06 — DashState + reorganización de assets + contrato Ixbalanqué
+- Componentes creados: `game/src/entities/states/dash_state.gd` (DashState: 12 i-frames a 60 fps desde MovementStatsResource, hurtbox off, sin gravedad, usa facing si no hay input, exit abre `time_since_dash = 0`). Hurtbox (Area2D) agregada a CharacterBase.tscn. `dash_pressed`/`facing`/`time_since_dash` en CharacterBase. Acción `dash` (Shift) en input map. MovementStatsResource: +dash_speed(400), dash_iframes(12), frames_per_second(60).
+- Assets: sheets de Hunahpú SON REFERENCIAS (alpha 255 plano, ajedrezado horneado, textos incluidos) → movidos a `game/assets/sprites/players/hunahpu/reference/`; concept art en `concept/hunahpu_selection_art.png`. Árbol creado: players/ixbalanque, enemies, bosses, sacred_creatures, artifacts, vfx, tilesets, ui, audio/{music,sfx}, fonts.
+- Docs: `docs/08_ixbalanque_media.md` (contrato media Ixbalanqué + regla de calidad de spritesheets: alpha real, grid fijo 64/96, sin etiquetas).
+- Señales nuevas EventBus: ninguna. Dependencias nuevas: ninguna.
+- Tests: 55/55 verdes.
+- Deuda pendiente: ventana de absorción (2 s) solo se trackea (`time_since_dash`), falta el componente de ataque melee que la consuma; sprites de producción de Hunahpú pendientes de re-export con alpha real; PanicState/MeditatingState/AttackState sin implementar.

@@ -8,15 +8,20 @@ class_name CharacterBase
 @export var max_light_radius: float = 1.0
 
 var input_axis: float = 0.0
+var facing: float = 1.0
+var dash_pressed: bool = false
 var grounded: bool = false
 var time_since_grounded: float = 9999.0
 var time_since_jump_pressed: float = 9999.0
+## Ventana de absorción post-dash (Ixbalanqué: golpe en <2 s = +2.0 Serenidad).
+var time_since_dash: float = 9999.0
 
 @onready var fsm: FiniteStateMachine = $FiniteStateMachine
 @onready var serenity: SerenityComponent = $SerenityComponent
 @onready var blood_circle: BloodCircleComponent = $BloodCircleComponent
 @onready var skulls: SkullsComponent = $SkullsComponent
 @onready var light: PointLight2D = $CharacterVisuals/PointLight2D
+@onready var hurtbox: Area2D = $Hurtbox
 
 
 func _ready() -> void:
@@ -38,6 +43,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	grounded = is_on_floor()
 	time_since_grounded = 0.0 if grounded else time_since_grounded + delta
+	time_since_dash += delta
 	_update_light()
 
 
@@ -59,6 +65,9 @@ func apply_gravity(delta: float) -> void:
 
 func _poll_input(delta: float) -> void:
 	input_axis = Input.get_axis("move_left", "move_right")
+	if input_axis != 0.0:
+		facing = signf(input_axis)
+	dash_pressed = Input.is_action_just_pressed("dash")
 	if Input.is_action_just_pressed("jump"):
 		time_since_jump_pressed = 0.0
 	else:
