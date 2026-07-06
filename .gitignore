@@ -12,6 +12,12 @@ __pycache__/
 *.pyc
 .venv/
 
+# process_image (herramienta local, no versionar lotes)
+process_image/sprites_input/*
+process_image/sprites_output/*
+!process_image/sprites_input/.gitkeep
+!process_image/sprites_output/.gitkeep
+
 # OS
 Thumbs.db
 .DS_Store

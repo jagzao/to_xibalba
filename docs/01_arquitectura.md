@@ -46,7 +46,7 @@ Pausa Segura por Software — **prohibido** `get_tree().paused = true` (congelar
   - PlayerState → IDLE
 ```
 
-Altares: Xoloitzcuintles y Colibríes. Poemas prehispánicos (Nezahualcóyotl).
+Altares: Xoloitzcuintles, Jaguares y Colibríes. Poemas cortos prehispánicos (Nezahualcóyotl).
 
 ### PoemResource (extends Resource, class_name PoemResource)
 | Campo | Tipo | Ejemplo/Default |

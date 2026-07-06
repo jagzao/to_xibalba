@@ -46,3 +46,10 @@ Formato por sesión:
 - Señales nuevas EventBus: ninguna. Dependencias nuevas: ninguna.
 - Tests: 55/55 verdes.
 - Deuda pendiente: ventana de absorción (2 s) solo se trackea (`time_since_dash`), falta el componente de ataque melee que la consuma; sprites de producción de Hunahpú pendientes de re-export con alpha real; PanicState/MeditatingState/AttackState sin implementar.
+
+## 2026-07-06 — Herramienta process_image (sprite-cleaner)
+- Creado `process_image/`: clean_sprites.py (CLI: --input/--output/--scale/--remove-text/--text-top-ratio/--alpha-threshold/--debug), requirements.txt, README.
+- Lógica: 2 tonos grises dominantes → máscara por RANGO de luminancia entre ambos (incluye transiciones) + conectividad al borde (protege grises internos) → alpha 0; texto = componentes opacos oscuros anchos/bajos; despeckle (<150 px grises); blur 1 px anti-halo.
+- Validado contra los 4 sheets de Hunahpú: fondo y textos fuera, sprites/gore/partículas intactos. Limitación conocida: anillo de checker teñido por el glow queda pegado al sprite (gris contaminado deja de ser neutro); checker encerrado entre extremidades no se borra (por diseño).
+- Dependencias nuevas: opencv-python 5.0 (pip local; OJO: la red del equipo intercepta SSL — instalar con --trusted-host pypi.org --trusted-host files.pythonhosted.org).
+- Tests Godot: sin cambios (55/55).
