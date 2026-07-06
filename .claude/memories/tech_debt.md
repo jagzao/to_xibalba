@@ -23,3 +23,10 @@ Formato por sesión:
 - Dependencias nuevas: ninguna.
 - Tests: 24/24 verdes.
 - Deuda pendiente: `decay_rate` es @export en SerenityComponent (no Resource dedicado); falta CharacterBase.tscn, BloodCircleComponent (stun 1.5 s), SkullsComponent, y componente de luz (PointLight2D ← get_light_radius).
+
+## 2026-07-06 — CharacterBase.tscn + componentes de vida
+- Componentes creados: `game/src/components/blood_circle_component.gd` (señal local `emptied`), `game/src/components/skulls_component.gd` (señal local `died`, guard anti re-muerte), `game/src/entities/states/stunned_state.gd` (StunnedState, 1.5 s exactos, vuelve a Idle), `game/src/entities/character_base.gd` + `CharacterBase.tscn` (CharacterBody2D con FSM[Idle,Stunned], 3 componentes, CharacterVisuals/PointLight2D; inyecta PlayerDataResource compartido; blood emptied → Stunned; Serenidad → texture_scale de la luz).
+- Señales nuevas en EventBus: ninguna (emptied/died son locales de componente; UI usa blood_circle_changed/skulls_changed).
+- Dependencias nuevas: ninguna.
+- Tests: 39/39 verdes.
+- Deuda pendiente: CharacterBase sin estados de movimiento (Move/Jump/Fall/Dash) ni coyote/buffering; PointLight2D sin textura asignada (radio se controla con texture_scale); `duration` del stun es @export, no Resource.
