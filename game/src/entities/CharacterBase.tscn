@@ -1,12 +1,15 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://src/entities/character_base.gd" id="1"]
 [ext_resource type="Script" path="res://src/core/finite_state_machine.gd" id="2"]
-[ext_resource type="Script" path="res://src/core/state.gd" id="3"]
+[ext_resource type="Script" path="res://src/entities/states/idle_state.gd" id="3"]
 [ext_resource type="Script" path="res://src/entities/states/stunned_state.gd" id="4"]
 [ext_resource type="Script" path="res://src/components/serenity_component.gd" id="5"]
 [ext_resource type="Script" path="res://src/components/blood_circle_component.gd" id="6"]
 [ext_resource type="Script" path="res://src/components/skulls_component.gd" id="7"]
+[ext_resource type="Script" path="res://src/entities/states/move_state.gd" id="8"]
+[ext_resource type="Script" path="res://src/entities/states/jump_state.gd" id="9"]
+[ext_resource type="Script" path="res://src/entities/states/fall_state.gd" id="10"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
 size = Vector2(16, 32)
@@ -22,6 +25,15 @@ script = ExtResource("2")
 
 [node name="Idle" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("3")
+
+[node name="Move" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("8")
+
+[node name="Jump" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("9")
+
+[node name="Fall" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("10")
 
 [node name="Stunned" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("4")

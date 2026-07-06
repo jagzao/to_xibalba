@@ -4,6 +4,9 @@ class_name State
 
 signal finished(next_state_name: String)
 
+## Dueño lógico del estado (lo inyecta FiniteStateMachine con su padre).
+var actor: Node
+
 
 func enter(_previous_state: String) -> void:
 	pass

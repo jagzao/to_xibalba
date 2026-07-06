@@ -27,14 +27,14 @@ func test_starts_in_idle() -> void:
 func test_light_radius_follows_serenity() -> void:
 	character.max_light_radius = 2.0
 	character.data.current_serenity = 50.0
-	character._physics_process(0.0)
+	character._update_light()
 	assert_eq(character.light.texture_scale, 1.0)
 
 
 func test_light_radius_critical_in_panic() -> void:
 	character.max_light_radius = 2.0
 	character.serenity.change(-100.0)
-	character._physics_process(0.0)
+	character._update_light()
 	assert_almost_eq(character.light.texture_scale, 0.1, 0.0001)
 
 

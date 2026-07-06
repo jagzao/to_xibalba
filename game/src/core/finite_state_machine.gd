@@ -12,6 +12,7 @@ func _ready() -> void:
 	for child: Node in get_children():
 		if child is State:
 			_states[child.name.to_lower()] = child
+			child.actor = get_parent()
 			child.finished.connect(change_state)
 	if initial_state == null and not _states.is_empty():
 		initial_state = get_child(0) as State

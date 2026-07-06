@@ -30,3 +30,11 @@ Formato por sesión:
 - Dependencias nuevas: ninguna.
 - Tests: 39/39 verdes.
 - Deuda pendiente: CharacterBase sin estados de movimiento (Move/Jump/Fall/Dash) ni coyote/buffering; PointLight2D sin textura asignada (radio se controla con texture_scale); `duration` del stun es @export, no Resource.
+
+## 2026-07-06 — Movimiento: Idle/Move/Jump/Fall + coyote/buffer + docs Módulo 7
+- Componentes creados: `game/src/core/movement_stats_resource.gd` (MovementStatsResource: speed, jump_velocity, gravity, coyote 0.1, buffer 0.1), estados `idle/move/jump/fall_state.gd` en `game/src/entities/states/`.
+- Cambios: `State` ahora tiene `actor` (lo inyecta la FSM con su padre). `CharacterBase` centraliza input/coyote/buffer (`can_coyote_jump`, `has_buffered_jump`, `consume_jump`, `apply_gravity`) y controla el orden por frame: input → estado → move_and_slide (fsm.set_physics_process(false)). Input map agregado a project.godot (A/D/flechas + espacio). Estados NO llaman move_and_slide (puros, testeables).
+- Docs: `docs/07_sistema_muerte.md` (GoreDataResource, muertes procedimentales, fatalities). Carpeta de assets: `game/assets/sprites/hunahpu/`.
+- Señales nuevas en EventBus: ninguna. Dependencias nuevas: ninguna.
+- Tests: 49/49 verdes.
+- Deuda pendiente: falta DashState (12 i-frames Ixbalanqué), PanicState, animaciones (AnimatedSprite2D con spritesheets de Hunahpú cuando se suban), GoreDataResource sin implementar.

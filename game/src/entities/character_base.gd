@@ -1,10 +1,16 @@
 extends CharacterBody2D
 class_name CharacterBase
 ## Base común de los gemelos. Inyecta el PlayerDataResource compartido a los
-## componentes y traduce Serenidad → radio de PointLight2D.
+## componentes, centraliza input/coyote/buffer y traduce Serenidad → radio de luz.
 
 @export var data: PlayerDataResource
+@export var stats: MovementStatsResource
 @export var max_light_radius: float = 1.0
+
+var input_axis: float = 0.0
+var grounded: bool = false
+var time_since_grounded: float = 9999.0
+var time_since_jump_pressed: float = 9999.0
 
 @onready var fsm: FiniteStateMachine = $FiniteStateMachine
 @onready var serenity: SerenityComponent = $SerenityComponent
@@ -16,13 +22,50 @@ class_name CharacterBase
 func _ready() -> void:
 	if data == null:
 		data = PlayerDataResource.new()
+	if stats == null:
+		stats = MovementStatsResource.new()
 	serenity.data = data
 	blood_circle.data = data
 	skulls.data = data
 	blood_circle.emptied.connect(_on_blood_circle_emptied)
+	# La base controla el orden: input → estado → move_and_slide.
+	fsm.set_physics_process(false)
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	_poll_input(delta)
+	fsm._physics_process(delta)
+	move_and_slide()
+	grounded = is_on_floor()
+	time_since_grounded = 0.0 if grounded else time_since_grounded + delta
+	_update_light()
+
+
+func can_coyote_jump() -> bool:
+	return grounded or time_since_grounded <= stats.coyote_time
+
+
+func has_buffered_jump() -> bool:
+	return time_since_jump_pressed <= stats.jump_buffer_time
+
+
+func consume_jump() -> void:
+	time_since_jump_pressed = 9999.0
+
+
+func apply_gravity(delta: float) -> void:
+	velocity.y += stats.gravity * delta
+
+
+func _poll_input(delta: float) -> void:
+	input_axis = Input.get_axis("move_left", "move_right")
+	if Input.is_action_just_pressed("jump"):
+		time_since_jump_pressed = 0.0
+	else:
+		time_since_jump_pressed += delta
+
+
+func _update_light() -> void:
 	light.texture_scale = data.get_light_radius(max_light_radius)
 
 
