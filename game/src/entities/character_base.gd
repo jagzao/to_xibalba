@@ -10,6 +10,7 @@ class_name CharacterBase
 var input_axis: float = 0.0
 var facing: float = 1.0
 var dash_pressed: bool = false
+var attack_pressed: bool = false
 var grounded: bool = false
 var time_since_grounded: float = 9999.0
 var time_since_jump_pressed: float = 9999.0
@@ -22,6 +23,8 @@ var time_since_dash: float = 9999.0
 @onready var skulls: SkullsComponent = $SkullsComponent
 @onready var light: PointLight2D = $CharacterVisuals/PointLight2D
 @onready var hurtbox: Area2D = $Hurtbox
+@onready var hitbox: Area2D = $Hitbox
+@onready var melee: MeleeAttackComponent = $MeleeAttackComponent
 
 
 func _ready() -> void:
@@ -33,6 +36,7 @@ func _ready() -> void:
 	blood_circle.data = data
 	skulls.data = data
 	blood_circle.emptied.connect(_on_blood_circle_emptied)
+	melee.setup(self, serenity, hitbox)
 	# La base controla el orden: input → estado → move_and_slide.
 	fsm.set_physics_process(false)
 
@@ -68,6 +72,7 @@ func _poll_input(delta: float) -> void:
 	if input_axis != 0.0:
 		facing = signf(input_axis)
 	dash_pressed = Input.is_action_just_pressed("dash")
+	attack_pressed = Input.is_action_just_pressed("attack")
 	if Input.is_action_just_pressed("jump"):
 		time_since_jump_pressed = 0.0
 	else:

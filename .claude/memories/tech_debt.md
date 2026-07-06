@@ -53,3 +53,12 @@ Formato por sesión:
 - Validado contra los 4 sheets de Hunahpú: fondo y textos fuera, sprites/gore/partículas intactos. Limitación conocida: anillo de checker teñido por el glow queda pegado al sprite (gris contaminado deja de ser neutro); checker encerrado entre extremidades no se borra (por diseño).
 - Dependencias nuevas: opencv-python 5.0 (pip local; OJO: la red del equipo intercepta SSL — instalar con --trusted-host pypi.org --trusted-host files.pythonhosted.org).
 - Tests Godot: sin cambios (55/55).
+
+## 2026-07-06 — MeleeAttackComponent + absorción post-dash + sheets limpios
+- Componentes creados: `game/src/core/combat_stats_resource.gd` (CombatStatsResource: damage 10, cooldown 0.35, active_time 0.15, absorption_window 2.0, absorption_serenity 2.0), `game/src/components/melee_attack_component.gd` (MeleeAttackComponent: setup() inyecta character/serenity/hitbox, try_attack() con cooldown, hitbox activa active_time, golpe en ventana post-dash → serenity.change(+2), convención `take_hit(damage)` en el target, señal local `hit_confirmed`).
+- CharacterBase: nodo Hitbox (Area2D monitoring=false, offset x+16) + MeleeAttackComponent en tscn; `attack_pressed` (tecla J) pollleado; estados Idle/Move/Jump/Fall disparan melee.try_attack() (Stunned/Dash no → inputs bloqueados por FSM).
+- Assets: versiones `*_clean.png` generadas en `players/hunahpu/reference/` con process_image (--alpha-threshold 22).
+- Convención nueva: los hurtbox de enemigos deben implementar `take_hit(damage: float)`.
+- Señales nuevas EventBus: ninguna. Dependencias nuevas: ninguna.
+- Tests: 62/62 verdes.
+- Deuda pendiente: Hitbox no se voltea con `facing` (offset fijo +16 a la derecha) — corregir cuando exista flip de visuales; falta cerbatana Hunahpú (apuntado 360° + ProjectileLight), PanicState, MeditatingState, HUD.

@@ -12,6 +12,8 @@ func physics_update(delta: float) -> void:
 	var c := actor as CharacterBase
 	c.velocity.x = c.input_axis * c.stats.speed
 	c.apply_gravity(delta)
+	if c.attack_pressed:
+		c.melee.try_attack()
 	if c.dash_pressed:
 		finished.emit("Dash")
 		return
