@@ -125,3 +125,12 @@ Formato por sesión:
 - Bugs reales: ninguno (verde al primer intento). Señales EventBus nuevas: ninguna.
 - Tests: 91/91 (8 nuevos).
 - Deuda: HUD sin arte (ProgressBar/Label nativos); título/autor del poema no se muestran (artifact_read_started solo lleva id+text — si se quiere título en pantalla, ampliar payload de la señal o mandar el PoemResource); barra equilibrio Luz/Oscuridad pendiente para E4.
+
+## 2026-07-07 — SpriteAnimator: animaciones de Ixbalanqué desde spritesheet
+- Creados: `process_image/slice_sheet.py` (recorta sheet limpio en frames por proyección de filas/columnas vacías; umbrales MIN_ROW_PIXELS=50000 y COL_NOISE=10 calibrados contra debris), frames en `game/assets/sprites/players/ixbalanque/frames/{idle,run,dash,jump_fall,panic,melee}/NN.png` (bottom-aligned, pies en la misma línea), `game/src/components/sprite_animator.gd` (SpriteAnimator extends AnimatedSprite2D: construye SpriteFrames escaneando carpetas en _ready, mapea estado FSM→animación vía STATE_TO_ANIM, flip_h por facing).
+- FSM: señal nueva `state_changed(previous_name, next_name)` emitida en change_state (el animador y cualquier feedback A/V se cuelgan de ahí).
+- Ixbalanque.tscn: nodo SpriteAnimator bajo CharacterVisuals, scale 0.15 (sprites ~280px vs colisión 32px).
+- OJO ordering Godot: los @onready del padre NO están listos cuando corre _ready de un nieto — SpriteAnimator usa get_node("FiniteStateMachine") directo, no character.fsm.
+- Bug real corregido (WIP ajeno, síntoma: [3] expected [2] en test_escenario_3_casas): BatHouse ignoraba camera_top_margin sin Camera2D (headless) — top quedaba 0.0 y nunca dañaba. Fix: sin cámara, el margen ES el umbral.
+- Tests: 154/154 (7 nuevos de animator).
+- Deuda: Hunahpu.tscn sin SpriteAnimator (sus frames aún no se recortan — mismo slicer sirve); dash de Ixbalanqué = 1 frame (re-pedir 12 al generador); melee anim existe pero ningún estado la dispara (ataque es componente — conectar a hit/try_attack después); anillo residual de checker visible en frames (aceptable como placeholder).

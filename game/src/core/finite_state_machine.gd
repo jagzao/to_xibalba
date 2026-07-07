@@ -2,6 +2,8 @@ extends Node
 class_name FiniteStateMachine
 ## Gestor de estados. Hijos = nodos State. Un solo estado activo a la vez.
 
+signal state_changed(previous_name: String, next_name: String)
+
 @export var initial_state: State
 
 var current_state: State
@@ -40,3 +42,4 @@ func change_state(state_name: String) -> void:
 		current_state.exit()
 	current_state = next
 	current_state.enter(previous)
+	state_changed.emit(previous, next.name)

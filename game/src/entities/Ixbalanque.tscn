@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://src/components/melee_attack_component.gd" id="4_ixbalanque"]
 [ext_resource type="Script" path="res://src/core/combat_stats_resource.gd" id="5_ixbalanque"]
 [ext_resource type="Script" path="res://src/core/ability_resource.gd" id="6_ixbalanque"]
+[ext_resource type="Script" path="res://src/components/sprite_animator.gd" id="7_ixbalanque"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ixbalanque"]
 size = Vector2(16, 32)
@@ -42,3 +43,8 @@ shape = SubResource("RectangleShape2D_ixbalanque")
 [node name="MeleeAttackComponent" type="Node" parent="." index="3"]
 script = ExtResource("4_ixbalanque")
 stats = SubResource("CombatStats_ixbalanque")
+
+[node name="SpriteAnimator" type="AnimatedSprite2D" parent="CharacterVisuals" index="0"]
+scale = Vector2(0.15, 0.15)
+script = ExtResource("7_ixbalanque")
+frames_root = "res://assets/sprites/players/ixbalanque/frames"

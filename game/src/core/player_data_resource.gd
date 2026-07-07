@@ -13,6 +13,13 @@ const PANIC_DAMAGE_MULTIPLIER: float = 1.5
 @export var current_skulls: int = 3
 @export var is_in_panic: bool = false
 @export var respawn_position: Vector2 = Vector2.ZERO
+@export var has_codex_fragment: bool = false
+
+
+## Alias de lectura legacy (algunos scripts usan `data.skulls`).
+var skulls: int:
+	get: return current_skulls
+	set(value): current_skulls = value
 
 
 ## Radio_Luz = Radio_Maximo * (Serenidad_Actual / Serenidad_Maxima)
