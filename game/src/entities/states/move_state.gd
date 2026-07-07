@@ -6,6 +6,9 @@ func physics_update(delta: float) -> void:
 	var c := actor as CharacterBase
 	c.velocity.x = c.input_axis * c.stats.speed
 	c.apply_gravity(delta)
+	if c.data.is_in_panic:
+		finished.emit("Panic")
+		return
 	if c.attack_pressed:
 		c.melee.try_attack()
 	if c.aim_pressed:

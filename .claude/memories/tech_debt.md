@@ -69,3 +69,10 @@ Formato por sesión:
 - Señales nuevas EventBus: ninguna. Dependencias: ninguna.
 - Tests: 68/68.
 - Deuda: ProjectileLight sin PointLight2D hijo ni shader de quemadura (visual, cuando haya arte); Destello de Resplandor (especial) sin implementar; ambos gemelos comparten CharacterBase.tscn con melee+ranged — escenas por gemelo después.
+
+## 2026-07-07 — PanicState + skills de workflow (spec/auto-implement/quality-runner)
+- `panic_state.gd` (PanicState): entra cuando `data.is_in_panic` (chequeo por polling en Idle/Move/Jump/Fall, sin señales cruzadas); permite caminar y saltar (coyote/buffer inline), bloquea dash/ataque/apuntado; sale solo a Idle al recuperar Serenidad. Stun tiene prioridad (blood emptied → Stunned incluso en pánico). Luz 0.1 y daño ×1.5 ya venían de PlayerDataResource.
+- Skills adaptados de casa_futbol en `.claude/skills/`: `/spec` (asunciones de gameplay, guarda `.agents/memory/tasks/{slug}.md`), `/auto-implement` (spec → código bajo CLAUDE.md → GUT mismo turno → run_pipeline → máx 3 intentos/error, 10 total → tech_debt → commit), `/quality-runner` (gate pipeline + límites furnace + paths prohibidos docs/, addons/gut/). NO se copió: workflow-state.json/complete-stage.js (innecesario, pipeline de 1 comando) ni fases playwright (sin superficie web).
+- Señales nuevas EventBus: ninguna. Dependencias: ninguna.
+- Tests: 73/73.
+- Deuda: PanicState mismo speed que Move (diseño no especifica penalización; ajustar si el playtest lo pide).
