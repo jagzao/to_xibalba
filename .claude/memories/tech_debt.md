@@ -76,3 +76,11 @@ Formato por sesión:
 - Señales nuevas EventBus: ninguna. Dependencias: ninguna.
 - Tests: 73/73.
 - Deuda: PanicState mismo speed que Move (diseño no especifica penalización; ajustar si el playtest lo pide).
+
+## 2026-07-07 — Altares didácticos (/auto-implement altares-didacticos)
+- Creados: `poem_resource.gd` (PoemResource: artifact_id/title/author/content_text/serenity_restored=100), `altar.gd` (Altar, Area2D por código, radio export 24, marca `nearby_altar` en CharacterBase por body_entered/exited), `meditating_state.gd` (MeditatingState: planta, hurtbox off, pausa decay con serenity.set_physics_process(false), emite artifact_read_started al entrar; interact cierra → serenity.change(+restored) → artifact_read_completed → Idle).
+- CharacterBase: `interact_pressed` (tecla E) + `nearby_altar` + `can_meditate()`. Transición desde Idle/Move/Panic (escape del pánico); Jump/Fall/Dash/Stunned no meditan.
+- Bugs reales encontrados: ninguno (pipeline verde al primer intento).
+- Señales EventBus nuevas: ninguna (usa artifact_read_started/completed ya existentes).
+- Tests: 83/83 (10 nuevos, incluye test de overlap físico con wait_physics_frames).
+- Deuda: altar sin visual/tscn (patrón código, arte después); daño directo a calaveras por scripts de entorno no está bloqueado durante meditación (spec lo marca fuera de scope); HUD del códice pendiente — las señales ya llevan id+texto.

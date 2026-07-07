@@ -14,6 +14,8 @@ var attack_pressed: bool = false
 var aim_pressed: bool = false
 var aim_held: bool = false
 var aim_direction: Vector2 = Vector2.RIGHT
+var interact_pressed: bool = false
+var nearby_altar: Altar = null
 var grounded: bool = false
 var time_since_grounded: float = 9999.0
 var time_since_jump_pressed: float = 9999.0
@@ -56,6 +58,10 @@ func _physics_process(delta: float) -> void:
 	_update_light()
 
 
+func can_meditate() -> bool:
+	return nearby_altar != null and nearby_altar.poem != null
+
+
 func can_coyote_jump() -> bool:
 	return grounded or time_since_grounded <= stats.coyote_time
 
@@ -80,6 +86,7 @@ func _poll_input(delta: float) -> void:
 	attack_pressed = Input.is_action_just_pressed("attack")
 	aim_pressed = Input.is_action_just_pressed("aim")
 	aim_held = Input.is_action_pressed("aim")
+	interact_pressed = Input.is_action_just_pressed("interact")
 	var to_mouse: Vector2 = get_global_mouse_position() - global_position
 	if to_mouse.length_squared() > 0.0:
 		aim_direction = to_mouse.normalized()

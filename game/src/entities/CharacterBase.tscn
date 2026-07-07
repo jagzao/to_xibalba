@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3]
+[gd_scene load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://src/entities/character_base.gd" id="1"]
 [ext_resource type="Script" path="res://src/core/finite_state_machine.gd" id="2"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://src/components/ranged_attack_component.gd" id="13"]
 [ext_resource type="Script" path="res://src/entities/states/aim_state.gd" id="14"]
 [ext_resource type="Script" path="res://src/entities/states/panic_state.gd" id="15"]
+[ext_resource type="Script" path="res://src/entities/states/meditating_state.gd" id="16"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
 size = Vector2(16, 32)
@@ -66,6 +67,9 @@ script = ExtResource("14")
 
 [node name="Panic" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("15")
+
+[node name="Meditating" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("16")
 
 [node name="Stunned" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("4")

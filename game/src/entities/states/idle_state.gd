@@ -9,6 +9,9 @@ func physics_update(delta: float) -> void:
 	if c.data.is_in_panic:
 		finished.emit("Panic")
 		return
+	if c.interact_pressed and c.can_meditate():
+		finished.emit("Meditating")
+		return
 	if c.attack_pressed:
 		c.melee.try_attack()
 	if c.aim_pressed:
