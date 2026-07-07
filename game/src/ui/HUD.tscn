@@ -1,41 +1,71 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://bnq4qmhe3wlqi"]
 
 [ext_resource type="Script" path="res://src/ui/hud.gd" id="1"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1")
 
-[node name="Root" type="Control" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-mouse_filter = 2
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="TopLeft" type="VBoxContainer" parent="Root"]
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 216.0
-offset_bottom = 96.0
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
 
-[node name="Skulls" type="HBoxContainer" parent="Root/TopLeft"]
+[node name="Skulls" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "☠ ☠ ☠"
 
-[node name="BloodBar" type="ProgressBar" parent="Root/TopLeft"]
-custom_minimum_size = Vector2(180, 12)
-show_percentage = false
+[node name="BloodBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
 
-[node name="SerenityBar" type="ProgressBar" parent="Root/TopLeft"]
-custom_minimum_size = Vector2(180, 12)
-show_percentage = false
+[node name="SerenityBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
 
-[node name="CodexPanel" type="PanelContainer" parent="Root"]
+[node name="CodexPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -180.0
-offset_top = -120.0
-offset_right = 180.0
-offset_bottom = 120.0
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="CodexText" type="Label" parent="Root/CodexPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="CodexPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CodexPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="CodexTitle" type="Label" parent="CodexPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "TITLE"
+
+[node name="CodexAuthor" type="Label" parent="CodexPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "AUTHOR"
+
+[node name="CodexContent" type="Label" parent="CodexPanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(360, 240)
+layout_mode = 2
+text = "CONTENT"
 autowrap_mode = 3

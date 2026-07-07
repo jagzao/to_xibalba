@@ -9,9 +9,9 @@ class DummyTarget:
 		received = damage
 
 
-const SCENE: PackedScene = preload("res://src/entities/CharacterBase.tscn")
+const SCENE: PackedScene = preload("res://src/entities/Ixbalanque.tscn")
 
-var c: CharacterBase
+var c: Ixbalanque
 var melee: MeleeAttackComponent
 
 

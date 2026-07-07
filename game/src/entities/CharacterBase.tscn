@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=14 format=3 uid="uid://dq6qksq5q6q6"]
 
 [ext_resource type="Script" path="res://src/entities/character_base.gd" id="1"]
 [ext_resource type="Script" path="res://src/core/finite_state_machine.gd" id="2"]
@@ -11,8 +11,6 @@
 [ext_resource type="Script" path="res://src/entities/states/jump_state.gd" id="9"]
 [ext_resource type="Script" path="res://src/entities/states/fall_state.gd" id="10"]
 [ext_resource type="Script" path="res://src/entities/states/dash_state.gd" id="11"]
-[ext_resource type="Script" path="res://src/components/melee_attack_component.gd" id="12"]
-[ext_resource type="Script" path="res://src/components/ranged_attack_component.gd" id="13"]
 [ext_resource type="Script" path="res://src/entities/states/aim_state.gd" id="14"]
 [ext_resource type="Script" path="res://src/entities/states/panic_state.gd" id="15"]
 [ext_resource type="Script" path="res://src/entities/states/meditating_state.gd" id="16"]
@@ -30,19 +28,6 @@ shape = SubResource("RectangleShape2D_1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("RectangleShape2D_1")
-
-[node name="Hitbox" type="Area2D" parent="."]
-monitoring = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(16, 0)
-shape = SubResource("RectangleShape2D_1")
-
-[node name="MeleeAttackComponent" type="Node" parent="."]
-script = ExtResource("12")
-
-[node name="RangedAttackComponent" type="Node" parent="."]
-script = ExtResource("13")
 
 [node name="FiniteStateMachine" type="Node" parent="."]
 script = ExtResource("2")

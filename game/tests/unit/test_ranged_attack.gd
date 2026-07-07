@@ -9,9 +9,9 @@ class DummyTarget:
 		received = damage
 
 
-const SCENE: PackedScene = preload("res://src/entities/CharacterBase.tscn")
+const SCENE: PackedScene = preload("res://src/entities/Hunahpu.tscn")
 
-var c: CharacterBase
+var c: Hunahpu
 
 
 func before_each() -> void:
@@ -65,7 +65,7 @@ func test_projectile_expires_by_lifetime() -> void:
 
 
 func test_aim_state_plants_and_fires_on_release() -> void:
-	c.aim_pressed = true
+	c.ability_pressed = true
 	c.fsm.current_state.physics_update(0.016)
 	assert_eq(c.fsm.current_state.name, &"Aim")
 	c.velocity.x = 99.0

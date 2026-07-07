@@ -12,10 +12,10 @@ func physics_update(delta: float) -> void:
 	if c.interact_pressed and c.can_meditate():
 		finished.emit("Meditating")
 		return
-	if c.attack_pressed:
+	if c.attack_pressed and c.melee != null:
 		c.melee.try_attack()
-	if c.aim_pressed:
-		finished.emit("Aim")
+	if c.ability_pressed and c.ability != null:
+		c.ability.execute_ability()
 		return
 	if c.dash_pressed:
 		finished.emit("Dash")

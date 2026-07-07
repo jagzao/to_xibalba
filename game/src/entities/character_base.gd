@@ -14,6 +14,7 @@ var attack_pressed: bool = false
 var aim_pressed: bool = false
 var aim_held: bool = false
 var aim_direction: Vector2 = Vector2.RIGHT
+var ability_pressed: bool = false
 var interact_pressed: bool = false
 var nearby_altar: Altar = null
 var grounded: bool = false
@@ -28,9 +29,12 @@ var time_since_dash: float = 9999.0
 @onready var skulls: SkullsComponent = $SkullsComponent
 @onready var light: PointLight2D = $CharacterVisuals/PointLight2D
 @onready var hurtbox: Area2D = $Hurtbox
-@onready var hitbox: Area2D = $Hitbox
-@onready var melee: MeleeAttackComponent = $MeleeAttackComponent
-@onready var ranged: RangedAttackComponent = $RangedAttackComponent
+
+## Cada gemelo inyecta su PlayerAbility, componentes de ataque y su hitbox.
+var ability: PlayerAbility = null
+var melee: MeleeAttackComponent = null
+var ranged: RangedAttackComponent = null
+var hitbox: Area2D = null
 
 
 func _ready() -> void:
@@ -42,8 +46,6 @@ func _ready() -> void:
 	blood_circle.data = data
 	skulls.data = data
 	blood_circle.emptied.connect(_on_blood_circle_emptied)
-	melee.setup(self, serenity, hitbox)
-	ranged.setup(self, serenity)
 	# La base controla el orden: input → estado → move_and_slide.
 	fsm.set_physics_process(false)
 
@@ -84,8 +86,9 @@ func _poll_input(delta: float) -> void:
 		facing = signf(input_axis)
 	dash_pressed = Input.is_action_just_pressed("dash")
 	attack_pressed = Input.is_action_just_pressed("attack")
-	aim_pressed = Input.is_action_just_pressed("aim")
-	aim_held = Input.is_action_pressed("aim")
+	aim_pressed = Input.is_action_just_pressed("ability")
+	aim_held = Input.is_action_pressed("ability")
+	ability_pressed = Input.is_action_just_pressed("ability")
 	interact_pressed = Input.is_action_just_pressed("interact")
 	var to_mouse: Vector2 = get_global_mouse_position() - global_position
 	if to_mouse.length_squared() > 0.0:

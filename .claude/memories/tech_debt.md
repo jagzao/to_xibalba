@@ -83,7 +83,20 @@ Formato por sesión:
 - Bugs reales encontrados: ninguno (pipeline verde al primer intento).
 - Señales EventBus nuevas: ninguna (usa artifact_read_started/completed ya existentes).
 - Tests: 83/83 (10 nuevos, incluye test de overlap físico con wait_physics_frames).
-- Deuda: altar sin visual/tscn (patrón código, arte después); daño directo a calaveras por scripts de entorno no está bloqueado durante meditación (spec lo marca fuera de scope); HUD del códice pendiente — las señales ya llevan id+texto.
+- Deuda: altar sin visual/tscn (patrón código, arte después); daño directo a calaveras por scripts de entorno no está bloqueado durante meditación (spec lo marca fuera de scope).
+
+## 2026-07-07 — HUD reactivo (/auto-implement hud)
+- Creados: `game/src/ui/HUD.tscn`, `game/src/ui/hud.gd` (CanvasLayer reactivo vía EventBus: calaveras como string, barra de sangre, barra de serenidad, panel de códice). Sin referencias a jugador; `Color(1,0.2,0.2)` para pánico.
+- Tests: `game/tests/unit/test_hud.gd` 8/8 asserts; pipeline pasa 91/91.
+- Señales EventBus nuevas: ninguna.
+- Deuda: arte final para HUD; barra de equilibrio Luz/Oscuridad (E4) fuera de scope v1.
+
+## 2026-07-07 — Separar gemelos (/auto-implement separar-gemelos)
+- Creados: `game/src/core/player_ability.gd` (PlayerAbility virtual), `game/src/core/ability_resource.gd`, `game/src/entities/abilities/hunahpu_ability.gd` (Aim con cerbatana), `game/src/entities/abilities/ixbalanque_ability.gd` (Dash + melee), `game/src/entities/hunahpu.gd` + `Hunahpu.tscn`, `game/src/entities/ixbalanque.gd` + `Ixbalanque.tscn`.
+- Cambios: `CharacterBase.tscn` ya no tiene melee/ranged; estados Idle/Move usan `ability_pressed`; input map `aim` renombrado a `ability`; tests melee/ranged actualizados a escenas de gemelos.
+- Bugs reales encontrados: `hitbox` no estaba expuesto en CharacterBase (fix: `var hitbox: Area2D`); `HunahpuAbility` gastaba serenidad doble con RangedAttackComponent (fix: solo checa, el gasto queda en shoot).
+- Tests: `game/tests/unit/test_separar_gemelos.gd` 9/9; pipeline 100/100.
+- Deuda: Destello de Resplandor y Manto de Jaguar son stubs v1; Hunahpú usa hitbox aunque no melee.
 
 ## 2026-07-07 — HUD (/auto-implement hud)
 - Creados: `game/src/ui/hud.gd` (class_name HUD, CanvasLayer) + `game/src/ui/HUD.tscn`. Suscrito a las 7 señales del EventBus en _ready. Calaveras data-driven (recrea hijos según max, remove_child+free síncrono para testeabilidad — queue_free dejaría hijos fantasma en el mismo frame). Pánico = modulate rojo en SerenityBar. CodexPanel oculto por default, muestra content_text.

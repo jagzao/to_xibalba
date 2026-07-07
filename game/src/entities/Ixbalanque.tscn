@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://ixbalanque12345"]
+
+[ext_resource type="PackedScene" path="res://src/entities/CharacterBase.tscn" id="1_ixbalanque"]
+[ext_resource type="Script" path="res://src/entities/ixbalanque.gd" id="2_ixbalanque"]
+[ext_resource type="Script" path="res://src/entities/abilities/ixbalanque_ability.gd" id="3_ixbalanque"]
+[ext_resource type="Script" path="res://src/components/melee_attack_component.gd" id="4_ixbalanque"]
+[ext_resource type="Script" path="res://src/core/combat_stats_resource.gd" id="5_ixbalanque"]
+[ext_resource type="Script" path="res://src/core/ability_resource.gd" id="6_ixbalanque"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ixbalanque"]
+size = Vector2(16, 32)
+
+[sub_resource type="Resource" id="AbilityStats_ixbalanque"]
+script = ExtResource("6_ixbalanque")
+serenity_cost = 0.0
+cooldown = 0.0
+description = "Paso del Jaguar"
+
+[sub_resource type="Resource" id="CombatStats_ixbalanque"]
+script = ExtResource("5_ixbalanque")
+damage = 10.0
+cooldown = 0.35
+active_time = 0.15
+absorption_window = 2.0
+absorption_serenity = 2.0
+
+[node name="Ixbalanque" instance=ExtResource("1_ixbalanque")]
+script = ExtResource("2_ixbalanque")
+
+[node name="IxbalanqueAbility" type="Node" parent="." index="1"]
+script = ExtResource("3_ixbalanque")
+stats = SubResource("AbilityStats_ixbalanque")
+melee = NodePath("../MeleeAttackComponent")
+
+[node name="Hitbox" type="Area2D" parent="." index="2"]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(16, 0)
+shape = SubResource("RectangleShape2D_ixbalanque")
+
+[node name="MeleeAttackComponent" type="Node" parent="." index="3"]
+script = ExtResource("4_ixbalanque")
+stats = SubResource("CombatStats_ixbalanque")

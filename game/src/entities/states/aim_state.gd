@@ -8,5 +8,6 @@ func physics_update(delta: float) -> void:
 	c.velocity.x = 0.0
 	c.apply_gravity(delta)
 	if not c.aim_held:
-		c.ranged.shoot(c.aim_direction)
+		if c.ranged != null:
+			c.ranged.shoot(c.aim_direction)
 		finished.emit("Idle")
