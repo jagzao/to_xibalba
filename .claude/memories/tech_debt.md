@@ -105,6 +105,13 @@ Formato por sesión:
 - Tests: `test_escenario_1_environment.gd` 6/6, `test_escenario_1_murcielago.gd` 3/3; pipeline 109/109.
 - Deuda: `SinkingPlatform` usa detector Area2D en tscn (no creado aún); arte y escenas de nivel propiamente no implementadas.
 
+## 2026-07-07 — Escenario 4 Juego de Pelota (/auto-implement escenario-4-pelota)
+- Creados: `BallStateResource`, `PerfectParryResource`, `KineticBall2D`, `DeflectionComponent`, `BallGoal`, `BallGameManager`.
+- Cambios: ninguno en core existente.
+- Bugs reales encontrados: `KineticBall2D` asumía `$Hitbox` fijo (fix: busca primer hijo Area2D); `BallGoal` usaba enum anidado que confundía al parser de GDScript en tests (fix: constantes enteras); `BallGameManager` buscaba jugador en root global (fix: export `player`).
+- Tests: `test_ball_deflection.gd` 8/8, `test_ball_game_manager.gd` 4/4; pipeline 121/121.
+- Deuda: fases del juego de pelota (Fase 1 y 2) son stubs; ilusiones de los dioses sin implementar; escena `.tscn` de la pelota no creada.
+
 ## 2026-07-07 — HUD (/auto-implement hud)
 - Creados: `game/src/ui/hud.gd` (class_name HUD, CanvasLayer) + `game/src/ui/HUD.tscn`. Suscrito a las 7 señales del EventBus en _ready. Calaveras data-driven (recrea hijos según max, remove_child+free síncrono para testeabilidad — queue_free dejaría hijos fantasma en el mismo frame). Pánico = modulate rojo en SerenityBar. CodexPanel oculto por default, muestra content_text.
 - Cero referencias a CharacterBase: la suite completa de tests corre sin jugador en el árbol (criterio de desacoplamiento probado, no solo declarado).
