@@ -84,3 +84,10 @@ Formato por sesión:
 - Señales EventBus nuevas: ninguna (usa artifact_read_started/completed ya existentes).
 - Tests: 83/83 (10 nuevos, incluye test de overlap físico con wait_physics_frames).
 - Deuda: altar sin visual/tscn (patrón código, arte después); daño directo a calaveras por scripts de entorno no está bloqueado durante meditación (spec lo marca fuera de scope); HUD del códice pendiente — las señales ya llevan id+texto.
+
+## 2026-07-07 — HUD (/auto-implement hud)
+- Creados: `game/src/ui/hud.gd` (class_name HUD, CanvasLayer) + `game/src/ui/HUD.tscn`. Suscrito a las 7 señales del EventBus en _ready. Calaveras data-driven (recrea hijos según max, remove_child+free síncrono para testeabilidad — queue_free dejaría hijos fantasma en el mismo frame). Pánico = modulate rojo en SerenityBar. CodexPanel oculto por default, muestra content_text.
+- Cero referencias a CharacterBase: la suite completa de tests corre sin jugador en el árbol (criterio de desacoplamiento probado, no solo declarado).
+- Bugs reales: ninguno (verde al primer intento). Señales EventBus nuevas: ninguna.
+- Tests: 91/91 (8 nuevos).
+- Deuda: HUD sin arte (ProgressBar/Label nativos); título/autor del poema no se muestran (artifact_read_started solo lleva id+text — si se quiere título en pantalla, ampliar payload de la señal o mandar el PoemResource); barra equilibrio Luz/Oscuridad pendiente para E4.
