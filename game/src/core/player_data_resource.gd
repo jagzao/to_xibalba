@@ -12,6 +12,7 @@ const PANIC_DAMAGE_MULTIPLIER: float = 1.5
 @export var max_skulls: int = 3
 @export var current_skulls: int = 3
 @export var is_in_panic: bool = false
+@export var respawn_position: Vector2 = Vector2.ZERO
 
 
 ## Radio_Luz = Radio_Maximo * (Serenidad_Actual / Serenidad_Maxima)

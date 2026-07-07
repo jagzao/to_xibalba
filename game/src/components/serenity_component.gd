@@ -30,3 +30,8 @@ func change(amount: float) -> void:
 func restore_full() -> void:
 	if data != null:
 		change(data.max_serenity)
+
+
+func set_multiplier(multiplier: float) -> void:
+	environment_multiplier = multiplier
+

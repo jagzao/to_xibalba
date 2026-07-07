@@ -98,6 +98,13 @@ Formato por sesión:
 - Tests: `game/tests/unit/test_separar_gemelos.gd` 9/9; pipeline 100/100.
 - Deuda: Destello de Resplandor y Manto de Jaguar son stubs v1; Hunahpú usa hitbox aunque no melee.
 
+## 2026-07-07 — Escenario 1 Ríos de Pesadilla (/auto-implement escenario-1-rios)
+- Creados: `HazardResource`, `SinkingPlatformResource`, `MurcielagoResource`, `SerenityZoneResource`; entidades `Checkpoint`, `HazardFloor`, `InvisiblePlatform`, `SinkingPlatform`, `SerenityZone`; enemigo `MurcielagoPeriferia`.
+- Cambios: `PlayerDataResource` + `respawn_position`; `SerenityComponent.set_multiplier()`.
+- Bugs reales encontrados: `InvisiblePlatform` buscaba `$CollisionShape2D` fijo (fix: busca primer hijo CollisionShape2D); `MurcielagoPeriferia` dependía de nodo `DetectionArea` fijo (fix: inyectar `player` directamente + body_entered genérico).
+- Tests: `test_escenario_1_environment.gd` 6/6, `test_escenario_1_murcielago.gd` 3/3; pipeline 109/109.
+- Deuda: `SinkingPlatform` usa detector Area2D en tscn (no creado aún); arte y escenas de nivel propiamente no implementadas.
+
 ## 2026-07-07 — HUD (/auto-implement hud)
 - Creados: `game/src/ui/hud.gd` (class_name HUD, CanvasLayer) + `game/src/ui/HUD.tscn`. Suscrito a las 7 señales del EventBus en _ready. Calaveras data-driven (recrea hijos según max, remove_child+free síncrono para testeabilidad — queue_free dejaría hijos fantasma en el mismo frame). Pánico = modulate rojo en SerenityBar. CodexPanel oculto por default, muestra content_text.
 - Cero referencias a CharacterBase: la suite completa de tests corre sin jugador en el árbol (criterio de desacoplamiento probado, no solo declarado).
