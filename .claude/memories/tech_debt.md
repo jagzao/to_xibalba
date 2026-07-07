@@ -112,6 +112,13 @@ Formato por sesión:
 - Tests: `test_ball_deflection.gd` 8/8, `test_ball_game_manager.gd` 4/4; pipeline 121/121.
 - Deuda: fases del juego de pelota (Fase 1 y 2) son stubs; ilusiones de los dioses sin implementar; escena `.tscn` de la pelota no creada.
 
+## 2026-07-07 — Escenario 2 Corte de los 12 Señores (/auto-implement escenario-2-corte)
+- Creados: `BossStatsResource`, `SharedBlackboard`, `DeceptiveLord`, `CouncilPuzzleRoom`, `LajaHirviendo`, `BossBase`, `BossDirector`, `HunCameAI`, `VucubCameAI`.
+- Cambios: ninguno en core existente.
+- Bugs reales encontrados: `CouncilPuzzleRoom.interact_with` no retornaba valor en todos los caminos (fix: retornar false tras `_fail_puzzle()`); test usaba `var character :=` sin tipo explícito causando inferencia fallida (fix: `var character: CharacterBase`); `DeceptiveLord` y `LajaHirviendo` huérfanos en tests (fix: `add_child_autofree`).
+- Tests: `test_escenario_2_puzzle.gd` 6/6, `test_escenario_2_boss.gd` 6/6; pipeline 133/133.
+- Deuda: combate real con hurtboxes de jefes, proyectiles de sangre de Vucub-Camé, escena de sala del consejo no creada.
+
 ## 2026-07-07 — HUD (/auto-implement hud)
 - Creados: `game/src/ui/hud.gd` (class_name HUD, CanvasLayer) + `game/src/ui/HUD.tscn`. Suscrito a las 7 señales del EventBus en _ready. Calaveras data-driven (recrea hijos según max, remove_child+free síncrono para testeabilidad — queue_free dejaría hijos fantasma en el mismo frame). Pánico = modulate rojo en SerenityBar. CodexPanel oculto por default, muestra content_text.
 - Cero referencias a CharacterBase: la suite completa de tests corre sin jugador en el árbol (criterio de desacoplamiento probado, no solo declarado).
