@@ -8,6 +8,9 @@ func physics_update(delta: float) -> void:
 	c.apply_gravity(delta)
 	if c.attack_pressed:
 		c.melee.try_attack()
+	if c.aim_pressed:
+		finished.emit("Aim")
+		return
 	if c.dash_pressed:
 		finished.emit("Dash")
 		return

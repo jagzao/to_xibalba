@@ -62,3 +62,10 @@ Formato por sesión:
 - Señales nuevas EventBus: ninguna. Dependencias nuevas: ninguna.
 - Tests: 62/62 verdes.
 - Deuda pendiente: Hitbox no se voltea con `facing` (offset fijo +16 a la derecha) — corregir cuando exista flip de visuales; falta cerbatana Hunahpú (apuntado 360° + ProjectileLight), PanicState, MeditatingState, HUD.
+
+## 2026-07-07 — Cerbatana Mística (Hunahpú)
+- Creados: `ranged_stats_resource.gd` (RangedStatsResource: cost 15, damage 12, speed 500, lifetime 1.5), `projectile_light.gd` (ProjectileLight, Area2D por código sin tscn, take_hit al impactar, muere por lifetime), `ranged_attack_component.gd` (RangedAttackComponent: shoot(dir) valida current_serenity >= cost, gasta vía SerenityComponent, señal `fired`), `aim_state.gd` (AimState: plantado, dispara al soltar `aim`).
+- CharacterBase: aim_pressed/aim_held (tecla K) + aim_direction (mouse); Idle/Move → Aim. Jump/Fall no apuntan (diseño: plantado en suelo).
+- Señales nuevas EventBus: ninguna. Dependencias: ninguna.
+- Tests: 68/68.
+- Deuda: ProjectileLight sin PointLight2D hijo ni shader de quemadura (visual, cuando haya arte); Destello de Resplandor (especial) sin implementar; ambos gemelos comparten CharacterBase.tscn con melee+ranged — escenas por gemelo después.
