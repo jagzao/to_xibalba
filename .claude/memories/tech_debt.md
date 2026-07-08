@@ -126,6 +126,13 @@ Formato por sesión:
 - Tests: `test_escenario_3_casas.gd` 15/15; pipeline 158/158.
 - Deuda: cámara/límites de muerte por altura, interacción real con Piedra de Fuego/Piedra de Humo, escenas `.tscn` de casas.
 
+## 2026-07-07 — Sistema de muerte/gore y partículas (/auto-implement sistema-muerte-gore)
+- Creados: `GoreEffect`, `DeathManager`, `DeathScreen`.
+- Cambios: `EventBus` añade `player_died`, `respawn_started`, `game_over`.
+- Bugs reales encontrados: `DeathManager._respawn` usaba `await` en `DeathScreen.fade_out` que en tests no avanzaba (fix: quitar await, respawn sincrónico con gore); `DeathScreen.show_game_over` usaba tween que en tests no finalizaba (fix: set directo de alpha); doble muerte en test daba race porque `_busy` no se reseteaba al inicio del test (fix: controlar `_busy` explícitamente en tests).
+- Tests: `test_sistema_muerte_gore.gd` 6/6; pipeline 164/164.
+- Deuda: texturas de partículas, cámara shake real, escena `GameOver.tscn`, integración con daño real del jugador.
+
 ## 2026-07-07 — HUD (/auto-implement hud)
 - Creados: `game/src/ui/hud.gd` (class_name HUD, CanvasLayer) + `game/src/ui/HUD.tscn`. Suscrito a las 7 señales del EventBus en _ready. Calaveras data-driven (recrea hijos según max, remove_child+free síncrono para testeabilidad — queue_free dejaría hijos fantasma en el mismo frame). Pánico = modulate rojo en SerenityBar. CodexPanel oculto por default, muestra content_text.
 - Cero referencias a CharacterBase: la suite completa de tests corre sin jugador en el árbol (criterio de desacoplamiento probado, no solo declarado).
