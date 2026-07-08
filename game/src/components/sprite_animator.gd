@@ -33,7 +33,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if _character.facing != 0.0:
+	if _character != null and _character.facing != 0.0:
 		flip_h = _character.facing < 0.0
 
 

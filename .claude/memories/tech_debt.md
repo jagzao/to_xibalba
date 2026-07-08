@@ -133,6 +133,13 @@ Formato por sesión:
 - Tests: `test_sistema_muerte_gore.gd` 6/6; pipeline 164/164.
 - Deuda: texturas de partículas, cámara shake real, escena `GameOver.tscn`, integración con daño real del jugador.
 
+## 2026-07-07 — Spritesheets y media de Ixbalanqué (/auto-implement spritesheets)
+- Creados: `GoreDataResource`, `BossFatalityScene`.
+- Cambios: `SpriteAnimator._process` ahora protege `_character == null` (fix para tests aislados).
+- Bugs reales encontrados: tests creaban `SpriteAnimator` sin `CharacterBase` padre, `_ready()` llamaba `get_node("../..")` y `_process` accedía a `_character.facing` (fix: null-check en `_process`; tests no añaden al árbol para evitar `_ready`).
+- Tests: `test_spritesheets.gd` 5/5; pipeline 169/169 (2 orphans leves de SpriteFrames cache, no fallan).
+- Deuda: generar sheets finales de Ixbalanqué según media contract, VFX slash, death states, escenas `.tscn` de fatalities.
+
 ## 2026-07-07 — HUD (/auto-implement hud)
 - Creados: `game/src/ui/hud.gd` (class_name HUD, CanvasLayer) + `game/src/ui/HUD.tscn`. Suscrito a las 7 señales del EventBus en _ready. Calaveras data-driven (recrea hijos según max, remove_child+free síncrono para testeabilidad — queue_free dejaría hijos fantasma en el mismo frame). Pánico = modulate rojo en SerenityBar. CodexPanel oculto por default, muestra content_text.
 - Cero referencias a CharacterBase: la suite completa de tests corre sin jugador en el árbol (criterio de desacoplamiento probado, no solo declarado).
