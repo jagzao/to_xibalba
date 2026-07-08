@@ -11,6 +11,7 @@ Metroidvania 2D en Godot 4 basado en el Popol Vuh: los Gemelos Divinos (Hunahpú
 - [[06_juego_pelota]] — Escenario 4: Juego de Pelota final (BallGameManager)
 - [[07_sistema_muerte]] — Gore pack, muertes procedimentales, fatalities de jefes
 - [[08_ixbalanque_media]] — contrato de media de Ixbalanqué + regla de calidad de spritesheets
+- [[09_diseno_nivel_e1]] — guía de diseño de niveles + blueprint del Escenario 1
 
 ## Reglas de código
 Ver `.claude/CLAUDE.md`. Resumen: composición > herencia, UI solo vía EventBus, tipado estático, FSM con nodos State, datos en Resources, test GUT por cada componente.
