@@ -99,7 +99,7 @@ func test_bat_house_above_camera_loses_skull() -> void:
 	add_child_autofree(bat)
 	bat.damage_delay = 0.5
 	bat.camera_top_margin = 32.0
-	character.add_to_group("player")
+	bat.track_player(character)
 	bat.activate(data)
 	bat._physics_process(0.6)
 	assert_eq(data.current_skulls, 2)

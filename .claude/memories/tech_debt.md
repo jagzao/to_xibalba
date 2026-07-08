@@ -119,6 +119,13 @@ Formato por sesión:
 - Tests: `test_escenario_2_puzzle.gd` 6/6, `test_escenario_2_boss.gd` 6/6; pipeline 133/133.
 - Deuda: combate real con hurtboxes de jefes, proyectiles de sangre de Vucub-Camé, escena de sala del consejo no creada.
 
+## 2026-07-07 — Escenario 3 Casas del Tormento (/auto-implement escenario-3-casas)
+- Creados: `HouseDoor`, `HouseEnvironment`, `DarkHouse`, `ColdHouse`, `JaguarHouse`, `BatHouse`, `KnifeHouse`, `HeatHouse`, `PorousPlatform`, `CodexFragment`.
+- Cambios: `PlayerDataResource` añade `has_codex_fragment` y alias `skulls` para compatibilidad.
+- Bugs reales encontrados: subclases `HouseEnvironment` heredaban `Node2D` pero usaban `body_entered`/`monitoring` exclusivos de `Area2D` (fix: convertir a `Area2D` o desacoplar); `HeatHouse.PorousPlatform` interno no cargaba desde test (fix: mover a `porous_platform.gd` propio); `ColdHouse` reseteaba físicas de un suelo que no existía en tests (fix: simplificar, escena proveerá fricción); `BatHouse` no encontraba jugador en tests headless sin viewport (fix: `track_player`).
+- Tests: `test_escenario_3_casas.gd` 15/15; pipeline 158/158.
+- Deuda: cámara/límites de muerte por altura, interacción real con Piedra de Fuego/Piedra de Humo, escenas `.tscn` de casas.
+
 ## 2026-07-07 — HUD (/auto-implement hud)
 - Creados: `game/src/ui/hud.gd` (class_name HUD, CanvasLayer) + `game/src/ui/HUD.tscn`. Suscrito a las 7 señales del EventBus en _ready. Calaveras data-driven (recrea hijos según max, remove_child+free síncrono para testeabilidad — queue_free dejaría hijos fantasma en el mismo frame). Pánico = modulate rojo en SerenityBar. CodexPanel oculto por default, muestra content_text.
 - Cero referencias a CharacterBase: la suite completa de tests corre sin jugador en el árbol (criterio de desacoplamiento probado, no solo declarado).

@@ -22,17 +22,20 @@ func deactivate() -> void:
 	_timer = 0.0
 
 
+var _tracked_player: CharacterBase = null
+
+
+func track_player(player: CharacterBase) -> void:
+	_tracked_player = player
+
+
 func _physics_process(delta: float) -> void:
 	if not active or data == null:
 		return
-	var player := _find_player()
+	var player := _tracked_player if _tracked_player != null else _find_player()
 	if player == null:
 		return
-	var cam := get_viewport().get_camera_2d()
-	# sin cámara (tests headless / escena suelta) el margen ES el umbral
-	var top := camera_top_margin
-	if cam != null:
-		top = cam.global_position.y + camera_top_margin
+	var top := _calculate_top()
 	if player.global_position.y < top:
 		_timer += delta
 	else:
@@ -41,6 +44,13 @@ func _physics_process(delta: float) -> void:
 		if data.current_skulls > 0:
 			data.current_skulls -= 1
 		_timer = 0.0
+
+
+func _calculate_top() -> float:
+	var cam := get_viewport().get_camera_2d()
+	if cam != null:
+		return cam.global_position.y + camera_top_margin
+	return camera_top_margin
 
 
 func _find_player() -> CharacterBase:
