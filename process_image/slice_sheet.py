@@ -53,6 +53,10 @@ def main() -> int:
     parser.add_argument("--input", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--rows", required=True, help="nombres de fila, csv")
+    parser.add_argument("--min-row-px", type=int, default=MIN_ROW_PIXELS)
+    parser.add_argument("--min-row-height", type=int, default=MIN_ROW_HEIGHT)
+    parser.add_argument("--row-noise", type=int, default=ROW_NOISE)
+    parser.add_argument("--col-noise", type=int, default=COL_NOISE)
     args = parser.parse_args()
 
     data = np.fromfile(args.input, dtype=np.uint8)
@@ -62,9 +66,9 @@ def main() -> int:
     opaque = img[:, :, 3] > ALPHA_MIN
 
     bands: list[tuple[int, int]] = []
-    for top, bottom in runs(opaque.sum(axis=1), ROW_NOISE, MIN_GAP):
+    for top, bottom in runs(opaque.sum(axis=1), args.row_noise, MIN_GAP):
         band = opaque[top:bottom]
-        if bottom - top >= MIN_ROW_HEIGHT and band.sum() >= MIN_ROW_PIXELS:
+        if bottom - top >= args.min_row_height and band.sum() >= args.min_row_px:
             bands.append((top, bottom))
 
     names = [n.strip() for n in args.rows.split(",")]
@@ -76,7 +80,7 @@ def main() -> int:
     for name, (top, bottom) in zip(names, bands):
         band = opaque[top:bottom]
         frames: list[tuple[int, int, int, int]] = []  # x, y, w, h absolutos
-        for left, right in runs(band.sum(axis=0), COL_NOISE, MIN_GAP):
+        for left, right in runs(band.sum(axis=0), args.col_noise, MIN_GAP):
             if right - left < MIN_FRAME_WIDTH:
                 continue
             piece = band[:, left:right]

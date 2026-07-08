@@ -134,3 +134,10 @@ Formato por sesión:
 - Bug real corregido (WIP ajeno, síntoma: [3] expected [2] en test_escenario_3_casas): BatHouse ignoraba camera_top_margin sin Camera2D (headless) — top quedaba 0.0 y nunca dañaba. Fix: sin cámara, el margen ES el umbral.
 - Tests: 154/154 (7 nuevos de animator).
 - Deuda: Hunahpu.tscn sin SpriteAnimator (sus frames aún no se recortan — mismo slicer sirve); dash de Ixbalanqué = 1 frame (re-pedir 12 al generador); melee anim existe pero ningún estado la dispara (ataque es componente — conectar a hit/try_attack después); anillo residual de checker visible en frames (aceptable como placeholder).
+
+## 2026-07-07 — Chroma green + animaciones completas de Hunahpú + assets nuevos
+- clean_sprites.py: modo **chroma green** auto-detectado por esquinas (G>140 & G>1.6R & G>1.6B) — los sheets nuevos en fondo verde salen mucho más limpios que el checkerboard. slice_sheet.py: params --row-noise/--col-noise/--min-row-px/--min-row-height.
+- Assets nuevos procesados: `hunahpu_extra_anims_ref` (aim 5, shoot 4, destello 4, meditate 4, hit 3 — shoot y destello venían fusionados por el glow, corte manual en y=647), base de Hunahpú recortado del sheet checker viejo (idle 5, run 8 fusionando 2 filas, jump_fall 5, panic 4). Ixbalanqué dash reemplazado por v2 verde (2 frames; los 12 pedidos no llegaron). Murciélago: `enemies/murcielago/frames/fly_a+fly_b` (8 frames verdes; dive/death vinieron contaminados — re-pedir). VFX slash aislado: `vfx/slash/frames/slash/` 5 frames.
+- Hunahpu.tscn: SpriteAnimator montado (frames_root propio). sprite_animator.gd: mapa actualizado (stunned→hit, aim→aim, meditating→meditate) + fallback (hit→panic→idle) para gemelos sin esa anim.
+- Tests: 158/158 (4 nuevos de Hunahpú animator).
+- Deuda: murciélago fly_a/fly_b sin fusionar en `fly` (esperar dive/death para armar el set); VFX slash sin nodo que lo instancie (conectar a melee hit_confirmed); dash 12f y dive/death del murciélago re-pedidos al generador; sheets con escalas inconsistentes entre filas (generator) — el bottom-align del slicer lo disimula.

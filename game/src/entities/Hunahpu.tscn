@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://src/components/ranged_attack_component.gd" id="4_hunahpu"]
 [ext_resource type="Script" path="res://src/core/ranged_stats_resource.gd" id="5_hunahpu"]
 [ext_resource type="Script" path="res://src/core/ability_resource.gd" id="6_hunahpu"]
+[ext_resource type="Script" path="res://src/components/sprite_animator.gd" id="7_hunahpu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hunahpu"]
 size = Vector2(16, 32)
@@ -41,3 +42,8 @@ shape = SubResource("RectangleShape2D_hunahpu")
 [node name="RangedAttackComponent" type="Node" parent="." index="3"]
 script = ExtResource("4_hunahpu")
 stats = SubResource("RangedStats_hunahpu")
+
+[node name="SpriteAnimator" type="AnimatedSprite2D" parent="CharacterVisuals" index="0"]
+scale = Vector2(0.15, 0.15)
+script = ExtResource("7_hunahpu")
+frames_root = "res://assets/sprites/players/hunahpu/frames"

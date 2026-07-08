@@ -63,6 +63,24 @@ def find_checker_tones(img: np.ndarray) -> list[int]:
     return tones
 
 
+def is_chroma_green(img: np.ndarray) -> bool:
+    h, w = img.shape[:2]
+    corners = [img[2, 2], img[2, w - 3], img[h - 3, 2], img[h - 3, w - 3]]
+    green = 0
+    for c in corners:
+        b, g, r = int(c[0]), int(c[1]), int(c[2])
+        if g > 140 and g > r * 1.6 and g > b * 1.6:
+            green += 1
+    return green >= 2
+
+
+def green_mask(img: np.ndarray) -> np.ndarray:
+    b = img[:, :, 0].astype(int)
+    g = img[:, :, 1].astype(int)
+    r = img[:, :, 2].astype(int)
+    return (g > 140) & (g > r * 1.6) & (g > b * 1.6)
+
+
 def background_mask(img: np.ndarray, tones: list[int], tol: int) -> np.ndarray:
     """Mascara del fondo: pixeles grises cercanos a los tonos del checker
     y conectados al borde de la imagen (no borra grises internos del sprite)."""
@@ -135,11 +153,15 @@ def process_image(
     debug: bool,
 ) -> str:
     img = load_bgr(path)
-    tones = find_checker_tones(img)
-    if not tones:
-        return "SKIP (no se detecto checkerboard gris)"
-
-    bg = background_mask(img, tones, tol)
+    if is_chroma_green(img):
+        bg = green_mask(img)
+        mode = "chroma green"
+    else:
+        tones = find_checker_tones(img)
+        if not tones:
+            return "SKIP (sin checkerboard gris ni chroma green)"
+        bg = background_mask(img, tones, tol)
+        mode = f"checker {tones}"
     alpha = np.where(bg, 0, 255).astype(np.uint8)
 
     txt = np.zeros_like(bg)
@@ -168,7 +190,7 @@ def process_image(
         preview[alpha == 0] = (255, 0, 255, 255)  # magenta = transparente
         save_png(out_dir / f"{stem}_alpha_preview.png", preview)
 
-    return f"OK (tonos checker: {tones}, texto borrado: {int(txt.sum())} px)"
+    return f"OK ({mode}, texto borrado: {int(txt.sum())} px)"
 
 
 def main() -> int:

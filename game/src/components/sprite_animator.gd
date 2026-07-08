@@ -10,9 +10,9 @@ const STATE_TO_ANIM: Dictionary[String, String] = {
 	"jump": "jump_fall",
 	"fall": "jump_fall",
 	"panic": "panic",
-	"stunned": "panic",
-	"aim": "idle",
-	"meditating": "idle",
+	"stunned": "hit",
+	"aim": "aim",
+	"meditating": "meditate",
 }
 
 @export var frames_root: String = ""
@@ -38,8 +38,13 @@ func _process(_delta: float) -> void:
 
 
 func _on_state_changed(_previous_name: String, next_name: String) -> void:
+	if sprite_frames == null:
+		return
 	var anim: String = STATE_TO_ANIM.get(next_name.to_lower(), "idle")
-	if sprite_frames != null and sprite_frames.has_animation(anim):
+	if not sprite_frames.has_animation(anim):
+		# gemelo sin esa animación: stun degrada a panic, el resto a idle
+		anim = "panic" if anim == "hit" else "idle"
+	if sprite_frames.has_animation(anim):
 		play(anim)
 
 
