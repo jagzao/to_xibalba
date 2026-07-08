@@ -15,4 +15,6 @@ func lose_skull() -> void:
 	var dead: bool = data.lose_skull()
 	_bus.skulls_changed.emit(data.current_skulls, data.max_skulls)
 	if dead:
+		if _bus.has_signal("player_died"):
+			_bus.player_died.emit("skull")
 		died.emit()

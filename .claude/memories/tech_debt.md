@@ -138,7 +138,19 @@ Formato por sesión:
 - Cambios: `SpriteAnimator._process` ahora protege `_character == null` (fix para tests aislados).
 - Bugs reales encontrados: tests creaban `SpriteAnimator` sin `CharacterBase` padre, `_ready()` llamaba `get_node("../..")` y `_process` accedía a `_character.facing` (fix: null-check en `_process`; tests no añaden al árbol para evitar `_ready`).
 - Tests: `test_spritesheets.gd` 5/5; pipeline 169/169 (2 orphans leves de SpriteFrames cache, no fallan).
-- Deuda: generar sheets finales de Ixbalanqué según media contract, VFX slash, death states, escenas `.tscn` de fatalities.
+- Deuda: generar sheets finales de Ixbalanqué según media contract, death states, escenas `.tscn` de fatalities.
+
+## 2026-07-07 — Pago de deuda técnica (quality-runner)
+- Cambios:
+  - `SkullsComponent.lose_skull()` emite `EventBus.player_died("skull")` al morir.
+  - `MeleeAttackComponent` añade `slash_vfx` (PackedScene) e instancia VFX en `_on_area_entered()`.
+  - `SlashVFX` + `SlashVFX.tscn` stub en `game/src/effects/`.
+  - `GameOver.tscn` stub + `DeathScreen` lo carga vía `change_scene_to_packed`.
+  - `CharacterBase._update_hitbox_facing()` flip del offset de `hitbox` por `facing`.
+  - `SpriteAnimator._ready()` protege `_character == null` y `fsm == null`.
+- Tests nuevos: `test_hitbox_facing.gd` 2/2.
+- Pipeline: 171/171 verdes.
+- Deuda restante: texturas de partículas reales, cámara shake, sheets finales de Ixbalanqué, escenas `.tscn` de fatalities, combate real de jefes con hurtboxes.
 
 ## 2026-07-07 — HUD (/auto-implement hud)
 - Creados: `game/src/ui/hud.gd` (class_name HUD, CanvasLayer) + `game/src/ui/HUD.tscn`. Suscrito a las 7 señales del EventBus en _ready. Calaveras data-driven (recrea hijos según max, remove_child+free síncrono para testeabilidad — queue_free dejaría hijos fantasma en el mismo frame). Pánico = modulate rojo en SerenityBar. CodexPanel oculto por default, muestra content_text.

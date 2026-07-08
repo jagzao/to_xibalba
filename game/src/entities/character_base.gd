@@ -58,6 +58,16 @@ func _physics_process(delta: float) -> void:
 	time_since_grounded = 0.0 if grounded else time_since_grounded + delta
 	time_since_dash += delta
 	_update_light()
+	_update_hitbox_facing()
+
+
+func _update_hitbox_facing() -> void:
+	if hitbox == null:
+		return
+	var shape := hitbox.get_child(0) as CollisionShape2D
+	if shape == null:
+		return
+	shape.position.x = 16.0 * signf(facing)
 
 
 func can_meditate() -> bool:

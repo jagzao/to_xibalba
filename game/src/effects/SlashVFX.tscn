@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://slashvfx001"]
+
+[ext_resource type="Texture2D" uid="uid://slashvfxsheet" path="res://assets/sprites/vfx/slash/frames/slash/01.png" id="1_slash"]
+
+[node name="SlashVFX" type="AnimatedSprite2D"]
+scale = Vector2(0.2, 0.2)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+autostart = true

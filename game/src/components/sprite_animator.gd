@@ -25,8 +25,12 @@ var _character: CharacterBase
 func _ready() -> void:
 	_character = get_node("../..") as CharacterBase
 	sprite_frames = _build_frames()
+	if _character == null:
+		return
 	# no usar _character.fsm: los @onready del padre aún no corren
 	var fsm := _character.get_node("FiniteStateMachine") as FiniteStateMachine
+	if fsm == null:
+		return
 	fsm.state_changed.connect(_on_state_changed)
 	if fsm.current_state != null:
 		_on_state_changed("", fsm.current_state.name)

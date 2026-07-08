@@ -6,6 +6,7 @@ class_name MeleeAttackComponent
 signal hit_confirmed(target: Area2D)
 
 @export var stats: CombatStatsResource
+@export var slash_vfx: PackedScene
 
 var character: CharacterBase
 var serenity: SerenityComponent
@@ -53,4 +54,17 @@ func _on_area_entered(target: Area2D) -> void:
 		target.take_hit(stats.damage)
 	if character != null and character.time_since_dash <= stats.absorption_window:
 		serenity.change(stats.absorption_serenity)
+	_spawn_slash_vfx()
 	hit_confirmed.emit(target)
+
+
+func _spawn_slash_vfx() -> void:
+	if slash_vfx == null or character == null:
+		return
+	var vfx := slash_vfx.instantiate() as Node2D
+	if vfx == null:
+		return
+	vfx.global_position = character.global_position
+	if character.facing < 0.0:
+		vfx.scale.x = -1.0
+	character.get_tree().root.add_child(vfx)
