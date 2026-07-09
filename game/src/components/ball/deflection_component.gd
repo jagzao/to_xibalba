@@ -39,6 +39,7 @@ func try_deflect(p_ball: KineticBall2D) -> bool:
 		aim = -to_ball.normalized()
 	p_ball.apply_deflection(aim, multiplier)
 	p_ball.set_state_light()
+	AudioManager.play_sfx_named(&"ball_parry", character.global_position)
 	return true
 
 

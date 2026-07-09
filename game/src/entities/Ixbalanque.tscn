@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ixbalanque12345"]
+[gd_scene load_steps=6 format=3 uid="uid://ixbalanque12345"]
 
 [ext_resource type="PackedScene" path="res://src/entities/CharacterBase.tscn" id="1_ixbalanque"]
 [ext_resource type="Script" path="res://src/entities/ixbalanque.gd" id="2_ixbalanque"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://src/core/combat_stats_resource.gd" id="5_ixbalanque"]
 [ext_resource type="Script" path="res://src/core/ability_resource.gd" id="6_ixbalanque"]
 [ext_resource type="Script" path="res://src/components/sprite_animator.gd" id="7_ixbalanque"]
+[ext_resource type="PackedScene" uid="uid://slashvfx001" path="res://src/effects/SlashVFX.tscn" id="8_ixbalanque"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ixbalanque"]
 size = Vector2(16, 32)
@@ -43,6 +44,7 @@ shape = SubResource("RectangleShape2D_ixbalanque")
 [node name="MeleeAttackComponent" type="Node" parent="." index="3"]
 script = ExtResource("4_ixbalanque")
 stats = SubResource("CombatStats_ixbalanque")
+slash_vfx = ExtResource("8_ixbalanque")
 
 [node name="SpriteAnimator" type="AnimatedSprite2D" parent="CharacterVisuals" index="0"]
 scale = Vector2(0.15, 0.15)

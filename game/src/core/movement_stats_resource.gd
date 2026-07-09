@@ -10,3 +10,7 @@ class_name MovementStatsResource
 @export var dash_speed: float = 400.0
 @export var dash_iframes: int = 12
 @export var frames_per_second: float = 60.0
+@export var fall_damage_height: float = 512.0
+@export var fall_impact_damage: float = 40.0
+@export var wall_slide_speed: float = 60.0
+@export var wall_jump_push: float = 200.0

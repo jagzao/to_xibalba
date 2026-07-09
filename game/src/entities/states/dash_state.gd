@@ -13,6 +13,7 @@ func enter(_previous_state: String) -> void:
 	_time_left = c.stats.dash_iframes / c.stats.frames_per_second
 	c.hurtbox.monitoring = false
 	c.velocity.y = 0.0
+	AudioManager.play_sfx_named(&"dash", c.global_position)
 
 
 func physics_update(delta: float) -> void:

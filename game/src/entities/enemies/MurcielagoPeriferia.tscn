@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://murcielago001"]
+
+[ext_resource type="Script" path="res://src/entities/enemies/murcielago_periferia.gd" id="1"]
+[ext_resource type="Script" path="res://src/core/murcielago_resource.gd" id="2"]
+
+[sub_resource type="Resource" id="Resource_murcielago"]
+script = ExtResource("2")
+passive_speed = 30.0
+charge_speed = 180.0
+detection_radius = 300.0
+serenity_threshold = 0.30
+blood_damage = 25.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(16, 12)
+
+[node name="MurcielagoPeriferia" type="CharacterBody2D"]
+script = ExtResource("1")
+stats = SubResource("Resource_murcielago")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_body")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -8.0
+offset_top = -6.0
+offset_right = 8.0
+offset_bottom = 6.0
+color = Color(0.2, 0.0, 0.0, 0.8)
+
+[node name="Hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_body")

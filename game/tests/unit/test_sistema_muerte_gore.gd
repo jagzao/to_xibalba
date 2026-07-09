@@ -53,6 +53,13 @@ func test_gore_fall_does_not_spawn_particles() -> void:
 	assert_eq(particles.size(), 0)
 
 
+func test_gore_shake_is_safe_without_camera() -> void:
+	gore.play(GoreEffect.Type.BLOOD)
+	gore._camera = null
+	gore._physics_process(0.05)
+	assert_true(gore._active)
+
+
 func test_death_manager_respawns_and_loses_skull() -> void:
 	var player: CharacterBase = load("res://src/entities/CharacterBase.tscn").instantiate()
 	player.data = data

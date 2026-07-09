@@ -1,0 +1,82 @@
+[gd_scene load_steps=7 format=3 uid="uid://ballcourt001"]
+
+[ext_resource type="Script" path="res://src/core/ball_game_manager.gd" id="1_bgm"]
+[ext_resource type="Script" path="res://src/core/ball_state_resource.gd" id="2_ballstate"]
+[ext_resource type="PackedScene" uid="uid://kineticball001" path="res://src/entities/KineticBall2D.tscn" id="3_ball"]
+[ext_resource type="PackedScene" uid="uid://ballgoal001" path="res://src/entities/environment/BallGoal.tscn" id="4_goal"]
+
+[sub_resource type="Resource" id="Resource_ballstate"]
+script = ExtResource("2_ballstate")
+base_speed = 250.0
+light_multiplier = 1.2
+darkness_multiplier = 1.0
+graze_damage = 25.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(600, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(16, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ceiling"]
+size = Vector2(600, 16)
+
+[node name="BallCourt" type="Node2D"]
+
+[node name="BallGameManager" type="Node" parent="."]
+script = ExtResource("1_bgm")
+ball_scene = ExtResource("3_ball")
+ball_state = SubResource("Resource_ballstate")
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(0, 90)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="ColorRect" type="ColorRect" parent="Floor"]
+offset_left = -300.0
+offset_top = -8.0
+offset_right = 300.0
+offset_bottom = 8.0
+color = Color(0.25, 0.2, 0.15, 1)
+
+[node name="Ceiling" type="StaticBody2D" parent="."]
+position = Vector2(0, -90)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling"]
+shape = SubResource("RectangleShape2D_ceiling")
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+position = Vector2(-300, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2(300, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="Goals" type="Node2D" parent="."]
+
+[node name="GoalGods" parent="Goals" instance=ExtResource("4_goal")]
+position = Vector2(-292, 0)
+side = 0
+
+[node name="GoalTwins" parent="Goals" instance=ExtResource("4_goal")]
+position = Vector2(292, 0)
+side = 1
+
+[node name="RespawnMarker" type="Marker2D" parent="."]
+position = Vector2(0, 0)
+
+[node name="SpawnGods" type="Marker2D" parent="."]
+position = Vector2(-150, 0)
+
+[node name="SpawnTwins" type="Marker2D" parent="."]
+position = Vector2(150, 0)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.1, 0.1, 0.12, 1)

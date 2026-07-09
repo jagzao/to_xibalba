@@ -11,6 +11,7 @@ const SKULL_EMPTY := "○"
 @onready var codex_title: Label = %CodexTitle
 @onready var codex_author: Label = %CodexAuthor
 @onready var codex_content: Label = %CodexContent
+@onready var balance_bar: ProgressBar = %BalanceBar
 
 
 func _ready() -> void:
@@ -21,7 +22,9 @@ func _ready() -> void:
 	EventBus.panic_exited.connect(_on_panic_exited)
 	EventBus.artifact_read_started.connect(_on_artifact_read_started)
 	EventBus.artifact_read_completed.connect(_on_artifact_read_completed)
+	EventBus.balance_changed.connect(_on_balance_changed)
 	codex_panel.hide()
+	balance_bar.visible = false
 
 
 func _on_serenity_changed(current: float, max_value: float) -> void:
@@ -59,3 +62,9 @@ func _on_artifact_read_started(id: String, text: String) -> void:
 
 func _on_artifact_read_completed() -> void:
 	codex_panel.hide()
+
+
+func _on_balance_changed(value: float) -> void:
+	balance_bar.visible = true
+	balance_bar.value = value
+	balance_bar.modulate = Color(1.0, 1.0, 1.0) if value >= 0.0 else Color(0.6, 0.0, 0.0)

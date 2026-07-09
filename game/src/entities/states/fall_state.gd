@@ -17,5 +17,8 @@ func physics_update(delta: float) -> void:
 	if c.has_buffered_jump() and c.can_coyote_jump():
 		finished.emit("Jump")
 		return
+	if c.wall_direction != 0.0 and signf(c.input_axis) == c.wall_direction:
+		finished.emit("WallSlide")
+		return
 	if c.grounded:
 		finished.emit("Move" if c.input_axis != 0.0 else "Idle")

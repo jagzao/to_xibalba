@@ -68,3 +68,4 @@ func _spawn_slash_vfx() -> void:
 	if character.facing < 0.0:
 		vfx.scale.x = -1.0
 	character.get_tree().root.add_child(vfx)
+	AudioManager.play_sfx_named(&"slash", character.global_position)

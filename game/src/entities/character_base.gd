@@ -17,7 +17,14 @@ var aim_direction: Vector2 = Vector2.RIGHT
 var ability_pressed: bool = false
 var interact_pressed: bool = false
 var nearby_altar: Altar = null
+var nearby_crevice: Area2D = null
 var grounded: bool = false
+## Dirección de la pared tocada (-1 izq, +1 der, 0 sin pared) para wall slide.
+var wall_direction: float = 0.0
+## Distancia de caída vertical acumulada (daño por impacto al aterrizar).
+var fall_distance: float = 0.0
+## Aceleración externa (corrientes de viento). La aplican WindCurrent al entrar/salir.
+var external_force: Vector2 = Vector2.ZERO
 var time_since_grounded: float = 9999.0
 var time_since_jump_pressed: float = 9999.0
 ## Ventana de absorción post-dash (Ixbalanqué: golpe en <2 s = +2.0 Serenidad).
@@ -53,12 +60,30 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	_poll_input(delta)
 	fsm._physics_process(delta)
+	velocity += external_force * delta
+	if not grounded and velocity.y > 0.0:
+		fall_distance += velocity.y * delta
 	move_and_slide()
+	var was_grounded: bool = grounded
 	grounded = is_on_floor()
+	wall_direction = -signf(get_wall_normal().x) if is_on_wall_only() else 0.0
+	if grounded and not was_grounded:
+		_on_landed()
 	time_since_grounded = 0.0 if grounded else time_since_grounded + delta
 	time_since_dash += delta
 	_update_light()
 	_update_hitbox_facing()
+
+
+func _on_landed() -> void:
+	if fall_distance > stats.fall_damage_height:
+		blood_circle.take_damage(stats.fall_impact_damage)
+		fsm.change_state("Stunned")
+	fall_distance = 0.0
+
+
+func reset_fall_distance() -> void:
+	fall_distance = 0.0
 
 
 func _update_hitbox_facing() -> void:

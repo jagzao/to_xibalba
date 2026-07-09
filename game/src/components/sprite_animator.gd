@@ -63,9 +63,10 @@ func _build_frames() -> SpriteFrames:
 			sf.add_animation(anim)
 		sf.set_animation_speed(anim, fps)
 		sf.set_animation_loop(anim, anim in loop_anims)
-		var files: PackedStringArray = DirAccess.open(
-			frames_root + "/" + anim
-		).get_files()
+		var anim_dir := DirAccess.open(frames_root + "/" + anim)
+		if anim_dir == null:
+			continue
+		var files: PackedStringArray = anim_dir.get_files()
 		files.sort()
 		for f: String in files:
 			if f.ends_with(".png"):

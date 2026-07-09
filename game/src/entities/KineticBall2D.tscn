@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://kineticball001"]
+
+[ext_resource type="Script" path="res://src/entities/kinetic_ball_2d.gd" id="1"]
+[ext_resource type="Script" path="res://src/core/ball_state_resource.gd" id="2"]
+
+[sub_resource type="Resource" id="Resource_ball"]
+script = ExtResource("2")
+base_speed = 250.0
+light_multiplier = 1.2
+darkness_multiplier = 1.0
+graze_damage = 25.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ball"]
+radius = 8.0
+
+[node name="KineticBall2D" type="RigidBody2D"]
+script = ExtResource("1")
+stats = SubResource("Resource_ball")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ball")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+color = Color(0.9, 0.9, 0.7, 1)
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_ball")

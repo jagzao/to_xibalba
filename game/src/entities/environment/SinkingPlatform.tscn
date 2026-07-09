@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://sinkingplatform001"]
+
+[ext_resource type="Script" path="res://src/entities/environment/sinking_platform.gd" id="1_sink"]
+[ext_resource type="Script" path="res://src/core/sinking_platform_resource.gd" id="2_stats"]
+
+[sub_resource type="Resource" id="Resource_sinkstats"]
+script = ExtResource("2_stats")
+sink_delay = 1.5
+sink_duration = 1.0
+sink_distance = 64.0
+respawn_delay = 2.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform"]
+size = Vector2(64, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_detector"]
+size = Vector2(64, 8)
+
+[node name="SinkingPlatform" type="StaticBody2D"]
+script = ExtResource("1_sink")
+stats = SubResource("Resource_sinkstats")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_platform")
+
+[node name="Detector" type="Area2D" parent="."]
+position = Vector2(0, -8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+shape = SubResource("RectangleShape2D_detector")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -32.0
+offset_top = -8.0
+offset_right = 32.0
+offset_bottom = 8.0
+color = Color(0.4, 0.25, 0.15, 1)

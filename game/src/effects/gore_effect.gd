@@ -12,6 +12,11 @@ enum Type { BLOOD, SKULL, FALL, FIRE, DARKNESS }
 var _active: bool = false
 var _timer: float = 0.0
 var _camera_shake: float = 0.0
+var _camera: Camera2D = null
+
+
+func _ready() -> void:
+	_camera = _find_camera()
 
 
 func play(type: Type, intensity: float = 1.0) -> void:
@@ -52,6 +57,24 @@ func _physics_process(delta: float) -> void:
 		return
 	_timer += delta
 	_camera_shake = move_toward(_camera_shake, 0.0, delta * 10.0)
+	_apply_camera_shake()
 	if _timer >= gore_duration:
 		_active = false
 		set_physics_process(false)
+		if _camera != null:
+			_camera.offset = Vector2.ZERO
+
+
+func _apply_camera_shake() -> void:
+	if _camera == null or _camera_shake <= 0.0:
+		return
+	var angle := randf() * TAU
+	var offset := Vector2(cos(angle), sin(angle)) * _camera_shake
+	_camera.offset = offset
+
+
+func _find_camera() -> Camera2D:
+	var vp := get_viewport()
+	if vp != null:
+		return vp.get_camera_2d()
+	return null

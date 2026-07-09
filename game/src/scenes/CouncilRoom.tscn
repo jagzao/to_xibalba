@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://councilroom001"]
+
+[ext_resource type="Script" path="res://src/entities/environment/council_puzzle_room.gd" id="1_council"]
+[ext_resource type="Script" path="res://src/entities/environment/laja_hirviendo.gd" id="2_laja"]
+
+[node name="CouncilRoom" type="Node2D"]
+
+[node name="CouncilPuzzleRoom" type="Node2D" parent="."]
+script = ExtResource("1_council")
+
+[node name="LajaHirviendo" type="Area2D" parent="."]
+script = ExtResource("2_laja")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LajaHirviendo"]
+
+[node name="Seats" type="Node2D" parent="."]
+
+[node name="ThroneMarkers" type="Node2D" parent="."]

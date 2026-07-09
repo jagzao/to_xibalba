@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://cameralimits001"]
+
+[ext_resource type="Script" path="res://src/entities/environment/camera_limits.gd" id="1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_limits"]
+size = Vector2(320, 180)
+
+[node name="CameraLimits" type="Area2D"]
+script = ExtResource("1")
+limit_left = -160
+limit_top = -90
+limit_right = 160
+limit_bottom = 90
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_limits")

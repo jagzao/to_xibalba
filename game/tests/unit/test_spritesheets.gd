@@ -31,6 +31,7 @@ func test_boss_fatality_does_not_finish_early() -> void:
 
 func test_sprite_animator_maps_fsm_states() -> void:
 	var animator := SpriteAnimator.new()
+	add_child_autofree(animator)
 	animator.frames_root = "res://assets/sprites/players/hunahpu/frames"
 	var frames := animator._build_frames()
 	assert_true(frames.has_animation("idle"))
@@ -39,6 +40,7 @@ func test_sprite_animator_maps_fsm_states() -> void:
 
 func test_sprite_animator_flip_follows_facing() -> void:
 	var animator := SpriteAnimator.new()
+	add_child_autofree(animator)
 	animator._character = null
 	# Sin personaje no debe romper
 	animator._process(0.0)

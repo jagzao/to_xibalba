@@ -11,8 +11,8 @@ var _busy: bool = false
 
 
 func _ready() -> void:
-	if Engine.has_singleton("EventBus"):
-		var bus := Engine.get_singleton("EventBus") as EventBus
+	var bus := _get_event_bus()
+	if bus != null:
 		bus.player_died.connect(_on_player_died)
 
 
@@ -51,8 +51,8 @@ func _respawn() -> void:
 		data.current_skulls -= 1
 	if player != null and data != null:
 		player.global_position = data.respawn_position
-	if Engine.has_singleton("EventBus"):
-		var bus := Engine.get_singleton("EventBus") as EventBus
+	var bus := _get_event_bus()
+	if bus != null:
 		bus.respawn_started.emit()
 	_busy = false
 
@@ -60,7 +60,15 @@ func _respawn() -> void:
 func _show_game_over() -> void:
 	if death_screen != null:
 		death_screen.show_game_over()
-	if Engine.has_singleton("EventBus"):
-		var bus := Engine.get_singleton("EventBus") as EventBus
+	var bus := _get_event_bus()
+	if bus != null:
 		bus.game_over.emit()
 	_busy = false
+
+
+func _get_event_bus() -> EventBus:
+	var root := get_tree()
+	if root == null:
+		return null
+	var bus := root.root.get_node_or_null("EventBus") as EventBus
+	return bus

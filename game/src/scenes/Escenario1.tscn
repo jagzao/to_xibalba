@@ -1,0 +1,310 @@
+[gd_scene load_steps=13 format=3 uid="uid://escenario1001"]
+
+[ext_resource type="Script" path="res://src/entities/environment/level_exit.gd" id="1_exit"]
+[ext_resource type="PackedScene" uid="uid://checkpoint001" path="res://src/entities/environment/Checkpoint.tscn" id="2_checkpoint"]
+[ext_resource type="PackedScene" uid="uid://altar001" path="res://src/entities/environment/Altar.tscn" id="3_altar"]
+[ext_resource type="PackedScene" uid="uid://sinkingplatform001" path="res://src/entities/environment/SinkingPlatform.tscn" id="4_sink"]
+[ext_resource type="PackedScene" uid="uid://hazardfloor001" path="res://src/entities/environment/HazardFloor.tscn" id="5_hazard"]
+[ext_resource type="PackedScene" uid="uid://murcielago001" path="res://src/entities/enemies/MurcielagoPeriferia.tscn" id="6_murc"]
+[ext_resource type="PackedScene" uid="uid://invisibleplatform001" path="res://src/entities/environment/InvisiblePlatform.tscn" id="7_inv"]
+[ext_resource type="PackedScene" uid="uid://serenityzone001" path="res://src/entities/environment/SerenityZone.tscn" id="8_zone"]
+[ext_resource type="PackedScene" uid="uid://cameralimits001" path="res://src/entities/environment/CameraLimits.tscn" id="9_cam"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor_s"]
+size = Vector2(256, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor_m"]
+size = Vector2(320, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor_l"]
+size = Vector2(384, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
+size = Vector2(48, 48)
+
+[node name="Escenario1" type="Node2D"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.04, 0.04, 0.06, 1)
+
+[node name="Rooms" type="Node2D" parent="."]
+
+[node name="S0_Boca" type="Node2D" parent="Rooms"]
+position = Vector2(0, 0)
+
+[node name="Floor" type="StaticBody2D" parent="Rooms/S0_Boca"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rooms/S0_Boca/Floor"]
+shape = SubResource("RectangleShape2D_floor_s")
+
+[node name="ColorRect" type="ColorRect" parent="Rooms/S0_Boca/Floor"]
+offset_left = -128.0
+offset_top = -8.0
+offset_right = 128.0
+offset_bottom = 8.0
+color = Color(0.2, 0.2, 0.25, 1)
+
+[node name="CameraLimits" parent="Rooms/S0_Boca" instance=ExtResource("9_cam")]
+limit_left = -128
+limit_top = -90
+limit_right = 128
+limit_bottom = 90
+
+[node name="S1_Vestibulo" type="Node2D" parent="Rooms"]
+position = Vector2(0, 200)
+
+[node name="Floor" type="StaticBody2D" parent="Rooms/S1_Vestibulo"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rooms/S1_Vestibulo/Floor"]
+shape = SubResource("RectangleShape2D_floor_m")
+
+[node name="ColorRect" type="ColorRect" parent="Rooms/S1_Vestibulo/Floor"]
+offset_left = -160.0
+offset_top = -8.0
+offset_right = 160.0
+offset_bottom = 8.0
+color = Color(0.2, 0.2, 0.25, 1)
+
+[node name="Checkpoint" parent="Rooms/S1_Vestibulo" instance=ExtResource("2_checkpoint")]
+position = Vector2(-60, -32)
+
+[node name="Altar" parent="Rooms/S1_Vestibulo" instance=ExtResource("3_altar")]
+position = Vector2(80, -28)
+
+[node name="CameraLimits" parent="Rooms/S1_Vestibulo" instance=ExtResource("9_cam")]
+position = Vector2(0, 0)
+limit_left = -160
+limit_top = -90
+limit_right = 160
+limit_bottom = 90
+
+[node name="S2_RioCañas1" type="Node2D" parent="Rooms"]
+position = Vector2(0, 400)
+
+[node name="Floor" type="StaticBody2D" parent="Rooms/S2_RioCañas1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rooms/S2_RioCañas1/Floor"]
+shape = SubResource("RectangleShape2D_floor_m")
+
+[node name="ColorRect" type="ColorRect" parent="Rooms/S2_RioCañas1/Floor"]
+offset_left = -160.0
+offset_top = -8.0
+offset_right = 160.0
+offset_bottom = 8.0
+color = Color(0.2, 0.2, 0.25, 1)
+
+[node name="SinkingPlatform1" parent="Rooms/S2_RioCañas1" instance=ExtResource("4_sink")]
+position = Vector2(-80, -8)
+
+[node name="SinkingPlatform2" parent="Rooms/S2_RioCañas1" instance=ExtResource("4_sink")]
+position = Vector2(80, -8)
+
+[node name="HazardFloor1" parent="Rooms/S2_RioCañas1" instance=ExtResource("5_hazard")]
+position = Vector2(-120, 12)
+
+[node name="HazardFloor2" parent="Rooms/S2_RioCañas1" instance=ExtResource("5_hazard")]
+position = Vector2(120, 12)
+
+[node name="CameraLimits" parent="Rooms/S2_RioCañas1" instance=ExtResource("9_cam")]
+limit_left = -160
+limit_top = -90
+limit_right = 160
+limit_bottom = 90
+
+[node name="S3_PozoEcos" type="Node2D" parent="Rooms"]
+position = Vector2(0, 650)
+
+[node name="Floor" type="StaticBody2D" parent="Rooms/S3_PozoEcos"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rooms/S3_PozoEcos/Floor"]
+shape = SubResource("RectangleShape2D_floor_m")
+
+[node name="ColorRect" type="ColorRect" parent="Rooms/S3_PozoEcos/Floor"]
+offset_left = -160.0
+offset_top = -8.0
+offset_right = 160.0
+offset_bottom = 8.0
+color = Color(0.2, 0.2, 0.25, 1)
+
+[node name="Checkpoint" parent="Rooms/S3_PozoEcos" instance=ExtResource("2_checkpoint")]
+position = Vector2(-60, -32)
+
+[node name="Murcielago1" parent="Rooms/S3_PozoEcos" instance=ExtResource("6_murc")]
+position = Vector2(-80, -50)
+
+[node name="Murcielago2" parent="Rooms/S3_PozoEcos" instance=ExtResource("6_murc")]
+position = Vector2(80, -50)
+
+[node name="CameraLimits" parent="Rooms/S3_PozoEcos" instance=ExtResource("9_cam")]
+limit_left = -160
+limit_top = -90
+limit_right = 160
+limit_bottom = 90
+
+[node name="S4_Cañas2" type="Node2D" parent="Rooms"]
+position = Vector2(0, 900)
+
+[node name="Floor" type="StaticBody2D" parent="Rooms/S4_Cañas2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rooms/S4_Cañas2/Floor"]
+shape = SubResource("RectangleShape2D_floor_l")
+
+[node name="ColorRect" type="ColorRect" parent="Rooms/S4_Cañas2/Floor"]
+offset_left = -192.0
+offset_top = -8.0
+offset_right = 192.0
+offset_bottom = 8.0
+color = Color(0.2, 0.2, 0.25, 1)
+
+[node name="SinkingPlatform1" parent="Rooms/S4_Cañas2" instance=ExtResource("4_sink")]
+position = Vector2(-96, -8)
+
+[node name="SinkingPlatform2" parent="Rooms/S4_Cañas2" instance=ExtResource("4_sink")]
+position = Vector2(0, -24)
+
+[node name="SinkingPlatform3" parent="Rooms/S4_Cañas2" instance=ExtResource("4_sink")]
+position = Vector2(96, -8)
+
+[node name="Murcielago1" parent="Rooms/S4_Cañas2" instance=ExtResource("6_murc")]
+position = Vector2(0, -70)
+
+[node name="CameraLimits" parent="Rooms/S4_Cañas2" instance=ExtResource("9_cam")]
+limit_left = -192
+limit_top = -90
+limit_right = 192
+limit_bottom = 90
+
+[node name="S5_Umbral" type="Node2D" parent="Rooms"]
+position = Vector2(0, 1150)
+
+[node name="Floor" type="StaticBody2D" parent="Rooms/S5_Umbral"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rooms/S5_Umbral/Floor"]
+shape = SubResource("RectangleShape2D_floor_m")
+
+[node name="ColorRect" type="ColorRect" parent="Rooms/S5_Umbral/Floor"]
+offset_left = -160.0
+offset_top = -8.0
+offset_right = 160.0
+offset_bottom = 8.0
+color = Color(0.2, 0.2, 0.25, 1)
+
+[node name="Checkpoint" parent="Rooms/S5_Umbral" instance=ExtResource("2_checkpoint")]
+position = Vector2(-60, -32)
+
+[node name="Altar" parent="Rooms/S5_Umbral" instance=ExtResource("3_altar")]
+position = Vector2(80, -28)
+
+[node name="SerenityZone" parent="Rooms/S5_Umbral" instance=ExtResource("8_zone")]
+position = Vector2(0, 0)
+
+[node name="CameraLimits" parent="Rooms/S5_Umbral" instance=ExtResource("9_cam")]
+limit_left = -160
+limit_top = -90
+limit_right = 160
+limit_bottom = 90
+
+[node name="S6_RioSangre1" type="Node2D" parent="Rooms"]
+position = Vector2(0, 1400)
+
+[node name="Floor" type="StaticBody2D" parent="Rooms/S6_RioSangre1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rooms/S6_RioSangre1/Floor"]
+shape = SubResource("RectangleShape2D_floor_m")
+
+[node name="ColorRect" type="ColorRect" parent="Rooms/S6_RioSangre1/Floor"]
+offset_left = -160.0
+offset_top = -8.0
+offset_right = 160.0
+offset_bottom = 8.0
+color = Color(0.2, 0.2, 0.25, 1)
+
+[node name="InvisiblePlatform1" parent="Rooms/S6_RioSangre1" instance=ExtResource("7_inv")]
+position = Vector2(-80, -10)
+
+[node name="InvisiblePlatform2" parent="Rooms/S6_RioSangre1" instance=ExtResource("7_inv")]
+position = Vector2(80, -10)
+
+[node name="CameraLimits" parent="Rooms/S6_RioSangre1" instance=ExtResource("9_cam")]
+limit_left = -160
+limit_top = -90
+limit_right = 160
+limit_bottom = 90
+
+[node name="S7_GaleriaCiega" type="Node2D" parent="Rooms"]
+position = Vector2(0, 1650)
+
+[node name="Floor" type="StaticBody2D" parent="Rooms/S7_GaleriaCiega"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rooms/S7_GaleriaCiega/Floor"]
+shape = SubResource("RectangleShape2D_floor_l")
+
+[node name="ColorRect" type="ColorRect" parent="Rooms/S7_GaleriaCiega/Floor"]
+offset_left = -192.0
+offset_top = -8.0
+offset_right = 192.0
+offset_bottom = 8.0
+color = Color(0.2, 0.2, 0.25, 1)
+
+[node name="Murcielago1" parent="Rooms/S7_GaleriaCiega" instance=ExtResource("6_murc")]
+position = Vector2(-120, -60)
+
+[node name="Murcielago2" parent="Rooms/S7_GaleriaCiega" instance=ExtResource("6_murc")]
+position = Vector2(120, -60)
+
+[node name="Murcielago3" parent="Rooms/S7_GaleriaCiega" instance=ExtResource("6_murc")]
+position = Vector2(0, -100)
+
+[node name="CameraLimits" parent="Rooms/S7_GaleriaCiega" instance=ExtResource("9_cam")]
+limit_left = -192
+limit_top = -90
+limit_right = 192
+limit_bottom = 90
+
+[node name="S8_Huida" type="Node2D" parent="Rooms"]
+position = Vector2(0, 1900)
+
+[node name="Floor" type="StaticBody2D" parent="Rooms/S8_Huida"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rooms/S8_Huida/Floor"]
+shape = SubResource("RectangleShape2D_floor_l")
+
+[node name="ColorRect" type="ColorRect" parent="Rooms/S8_Huida/Floor"]
+offset_left = -192.0
+offset_top = -8.0
+offset_right = 192.0
+offset_bottom = 8.0
+color = Color(0.2, 0.2, 0.25, 1)
+
+[node name="Murcielago1" parent="Rooms/S8_Huida" instance=ExtResource("6_murc")]
+position = Vector2(-120, -60)
+
+[node name="Murcielago2" parent="Rooms/S8_Huida" instance=ExtResource("6_murc")]
+position = Vector2(120, -60)
+
+[node name="Murcielago3" parent="Rooms/S8_Huida" instance=ExtResource("6_murc")]
+position = Vector2(0, -100)
+
+[node name="Murcielago4" parent="Rooms/S8_Huida" instance=ExtResource("6_murc")]
+position = Vector2(0, -140)
+
+[node name="CameraLimits" parent="Rooms/S8_Huida" instance=ExtResource("9_cam")]
+limit_left = -192
+limit_top = -90
+limit_right = 192
+limit_bottom = 90
+
+[node name="Exit" type="Area2D" parent="."]
+position = Vector2(0, 1950)
+script = ExtResource("1_exit")
+next_scene_path = "res://src/scenes/CouncilRoom.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
+shape = SubResource("RectangleShape2D_exit")
+
+[node name="ColorRect" type="ColorRect" parent="Exit"]
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+color = Color(0.0, 0.8, 0.2, 0.5)

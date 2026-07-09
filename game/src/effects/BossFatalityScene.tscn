@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bossfatality001"]
+
+[ext_resource type="Script" path="res://src/effects/boss_fatality_scene.gd" id="1"]
+
+[node name="BossFatalityScene" type="Node2D"]
+script = ExtResource("1")
+duration = 3.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+color = Color(0.6, 0.0, 0.0, 0.5)

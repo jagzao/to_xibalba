@@ -1,0 +1,29 @@
+[gd_scene load_steps=14 format=3 uid="uid://audiomanager001"]
+
+[ext_resource type="Script" path="res://src/core/audio_manager.gd" id="1"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/e1_ambient.wav" id="2_amb"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/e1_tension.wav" id="3_ten"]
+[ext_resource type="AudioStream" path="res://assets/audio/music/boss_layer.wav" id="4_boss"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/slash.wav" id="5_slash"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/hit_blood.wav" id="6_blood"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/hit_skull.wav" id="7_skull"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/ball_bounce.wav" id="8_bounce"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/ball_parry.wav" id="9_parry"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/dash.wav" id="10_dash"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/altar_read.wav" id="11_altar"]
+[ext_resource type="AudioStream" path="res://assets/audio/sfx/projectile.wav" id="12_proj"]
+
+[node name="AudioManager" type="Node"]
+script = ExtResource("1")
+
+[node name="Music_Ambient" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_amb")
+bus = &"Music"
+
+[node name="Music_Tension" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ten")
+bus = &"Music"
+
+[node name="Music_Boss" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_boss")
+bus = &"Music"

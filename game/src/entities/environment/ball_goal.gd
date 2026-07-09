@@ -19,3 +19,4 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	var shift: float = -balance_shift if side == SIDE_GODS else balance_shift
 	EventBus.balance_changed.emit(shift)
+	ball.queue_free()

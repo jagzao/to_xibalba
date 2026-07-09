@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dq6qksq5q6q6"]
+[gd_scene load_steps=16 format=3 uid="uid://dq6qksq5q6q6"]
 
 [ext_resource type="Script" path="res://src/entities/character_base.gd" id="1"]
 [ext_resource type="Script" path="res://src/core/finite_state_machine.gd" id="2"]
@@ -14,6 +14,8 @@
 [ext_resource type="Script" path="res://src/entities/states/aim_state.gd" id="14"]
 [ext_resource type="Script" path="res://src/entities/states/panic_state.gd" id="15"]
 [ext_resource type="Script" path="res://src/entities/states/meditating_state.gd" id="16"]
+[ext_resource type="Script" path="res://src/entities/states/wall_slide_state.gd" id="17"]
+[ext_resource type="Script" path="res://src/entities/states/hiding_state.gd" id="18"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
 size = Vector2(16, 32)
@@ -55,6 +57,12 @@ script = ExtResource("15")
 
 [node name="Meditating" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("16")
+
+[node name="WallSlide" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("17")
+
+[node name="Hiding" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("18")
 
 [node name="Stunned" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("4")

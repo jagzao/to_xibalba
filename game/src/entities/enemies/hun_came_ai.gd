@@ -24,12 +24,17 @@ func _physics_process(delta: float) -> void:
 
 
 func _attack_melee() -> void:
-	# Simulación de daño melee: en escena real conectamos hurtbox del jugador.
-	# Aquí no tenemos referencia directa al jugador; BossDirector maneja colisiones.
-	pass
+	# Activamos la hitbox melee por un instante para que _deal_damage_to dispare.
+	var hitbox := get_node_or_null("Hitbox") as Area2D
+	if hitbox == null:
+		return
+	hitbox.monitoring = true
+	await get_tree().create_timer(0.15).timeout
+	if is_instance_valid(hitbox):
+		hitbox.monitoring = false
 
 
-func deal_melee_damage(target: CharacterBase) -> void:
+func _deal_damage_to(target: CharacterBase) -> void:
 	if target == null or stats == null:
 		return
 	var damage: float = stats.melee_damage
@@ -38,3 +43,7 @@ func deal_melee_damage(target: CharacterBase) -> void:
 		target.skulls.lose_skull()
 	else:
 		target.blood_circle.take_damage(damage)
+
+
+func deal_melee_damage(target: CharacterBase) -> void:
+	_deal_damage_to(target)

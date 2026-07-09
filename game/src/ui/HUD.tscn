@@ -32,6 +32,13 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="BalanceBar" type="ProgressBar" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+min_value = -100.0
+max_value = 100.0
+
 [node name="CodexPanel" type="PanelContainer" parent="."]
 unique_name_in_owner = true
 visible = false
