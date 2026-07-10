@@ -15,6 +15,12 @@
 - Tests: 202/202 (9 nuevos test_descenso_scene.gd, incluye assert de que el suelo está más hondo que fall_damage_height).
 - Deuda greybox: salas 2 (Grietas+BlindStalker+CreviceSpots) y 3 (Ascenso) no montadas en escena aún — entidades listas; falta ruta en World/MainMenu hacia Descenso.tscn como primer nivel.
 
+### Salas 2 y 3 + boot al Descenso (mismo día)
+- Descenso.tscn ahora es el MVP completo: pared derecha recortada (puerta en y2450-2600) → S2_Grietas (pasillo x176-1506, techo bajo a -130, 3 CreviceSpots, BlindStalker patrulla abs 400-1300) → S3_Ascenso (chimenea x1250-1500, 4 desmoronables alternadas ascendentes, 2 murciélagos en ángulos muertos, Exit arriba en y1300 → Escenario1).
+- World.tscn arranca en Descenso (era Escenario1). Flujo MVP: MainMenu → World(LevelManager) → Descenso → Escenario1 ríos → CouncilRoom.
+- Tests: 206/206 (4 nuevos: sigilo S2, alternancia ascendente S3, exit arriba, World boot smoke).
+- Deuda: BlindStalker usa patrol_left/right en coordenadas GLOBALES (frágil si se mueve la sala — convertir a offsets locales algún día); techo S2 a 130px no exige crouch (no existe crouch aún); foso de agua segura del diseño de S3 = suelo normal en greybox.
+
 ## Sesión 2026-07-08: batches A/B/C
 
 ### Deuda técnica deliberada (ponytail)

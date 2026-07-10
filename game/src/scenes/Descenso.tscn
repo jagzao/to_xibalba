@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://descenso001"]
+[gd_scene load_steps=18 format=3 uid="uid://descenso001"]
 
 [ext_resource type="Script" path="res://src/entities/environment/level_exit.gd" id="1_exit"]
 [ext_resource type="PackedScene" uid="uid://checkpoint001" path="res://src/entities/environment/Checkpoint.tscn" id="2_checkpoint"]
@@ -8,9 +8,23 @@
 [ext_resource type="PackedScene" uid="uid://hazardfloor001" path="res://src/entities/environment/HazardFloor.tscn" id="6_hazard"]
 [ext_resource type="PackedScene" uid="uid://murcielago001" path="res://src/entities/enemies/MurcielagoPeriferia.tscn" id="7_murc"]
 [ext_resource type="PackedScene" uid="uid://cameralimits001" path="res://src/entities/environment/CameraLimits.tscn" id="8_cam"]
+[ext_resource type="Script" path="res://src/entities/environment/crevice_spot.gd" id="9_crevice"]
+[ext_resource type="Script" path="res://src/entities/enemies/blind_stalker.gd" id="10_stalker"]
 
 [sub_resource type="RectangleShape2D" id="Shape_wall"]
 size = Vector2(32, 2650)
+
+[sub_resource type="RectangleShape2D" id="Shape_wall_right"]
+size = Vector2(32, 2450)
+
+[sub_resource type="RectangleShape2D" id="Shape_corridor_floor"]
+size = Vector2(1330, 32)
+
+[sub_resource type="RectangleShape2D" id="Shape_corridor_ceiling"]
+size = Vector2(1080, 32)
+
+[sub_resource type="RectangleShape2D" id="Shape_chimney_wall"]
+size = Vector2(32, 1450)
 
 [sub_resource type="RectangleShape2D" id="Shape_floor"]
 size = Vector2(384, 32)
@@ -40,16 +54,16 @@ offset_bottom = 1325.0
 color = Color(0.15, 0.13, 0.16, 1)
 
 [node name="WallRight" type="StaticBody2D" parent="."]
-position = Vector2(176, 1300)
+position = Vector2(176, 1225)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallRight"]
-shape = SubResource("Shape_wall")
+shape = SubResource("Shape_wall_right")
 
 [node name="ColorRect" type="ColorRect" parent="WallRight"]
 offset_left = -16.0
-offset_top = -1325.0
+offset_top = -1225.0
 offset_right = 16.0
-offset_bottom = 1325.0
+offset_bottom = 1225.0
 color = Color(0.15, 0.13, 0.16, 1)
 
 [node name="A1_Brecha" type="Node2D" parent="."]
@@ -224,8 +238,146 @@ limit_top = -100
 limit_right = 176
 limit_bottom = 660
 
+[node name="S2_Grietas" type="Node2D" parent="."]
+position = Vector2(176, 2600)
+
+[node name="Suelo" type="StaticBody2D" parent="S2_Grietas"]
+position = Vector2(665, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="S2_Grietas/Suelo"]
+shape = SubResource("Shape_corridor_floor")
+
+[node name="ColorRect" type="ColorRect" parent="S2_Grietas/Suelo"]
+offset_left = -665.0
+offset_top = -16.0
+offset_right = 665.0
+offset_bottom = 16.0
+color = Color(0.2, 0.2, 0.25, 1)
+
+[node name="Techo" type="StaticBody2D" parent="S2_Grietas"]
+position = Vector2(537, -130)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="S2_Grietas/Techo"]
+shape = SubResource("Shape_corridor_ceiling")
+
+[node name="ColorRect" type="ColorRect" parent="S2_Grietas/Techo"]
+offset_left = -540.0
+offset_top = -16.0
+offset_right = 540.0
+offset_bottom = 16.0
+color = Color(0.15, 0.13, 0.16, 1)
+
+[node name="Grieta1" type="Area2D" parent="S2_Grietas"]
+position = Vector2(250, -40)
+script = ExtResource("9_crevice")
+
+[node name="GrietaVisual1" type="ColorRect" parent="S2_Grietas/Grieta1"]
+offset_left = -16.0
+offset_top = -24.0
+offset_right = 16.0
+offset_bottom = 24.0
+color = Color(0.02, 0.02, 0.03, 1)
+
+[node name="Grieta2" type="Area2D" parent="S2_Grietas"]
+position = Vector2(550, -40)
+script = ExtResource("9_crevice")
+
+[node name="GrietaVisual2" type="ColorRect" parent="S2_Grietas/Grieta2"]
+offset_left = -16.0
+offset_top = -24.0
+offset_right = 16.0
+offset_bottom = 24.0
+color = Color(0.02, 0.02, 0.03, 1)
+
+[node name="Grieta3" type="Area2D" parent="S2_Grietas"]
+position = Vector2(850, -40)
+script = ExtResource("9_crevice")
+
+[node name="GrietaVisual3" type="ColorRect" parent="S2_Grietas/Grieta3"]
+offset_left = -16.0
+offset_top = -24.0
+offset_right = 16.0
+offset_bottom = 24.0
+color = Color(0.02, 0.02, 0.03, 1)
+
+[node name="Stalker" type="CharacterBody2D" parent="S2_Grietas"]
+position = Vector2(700, -40)
+script = ExtResource("10_stalker")
+patrol_left = 400.0
+patrol_right = 1300.0
+
+[node name="StalkerVisual" type="ColorRect" parent="S2_Grietas/Stalker"]
+offset_left = -12.0
+offset_top = -20.0
+offset_right = 12.0
+offset_bottom = 20.0
+color = Color(0.5, 0.1, 0.1, 1)
+
+[node name="CameraLimits" parent="S2_Grietas" instance=ExtResource("8_cam")]
+limit_left = 0
+limit_top = -200
+limit_right = 1330
+limit_bottom = 60
+
+[node name="S3_Ascenso" type="Node2D" parent="."]
+position = Vector2(1375, 2600)
+
+[node name="ParedIzq" type="StaticBody2D" parent="S3_Ascenso"]
+position = Vector2(-125, -790)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="S3_Ascenso/ParedIzq"]
+shape = SubResource("Shape_chimney_wall")
+
+[node name="ColorRectIzq" type="ColorRect" parent="S3_Ascenso/ParedIzq"]
+offset_left = -16.0
+offset_top = -725.0
+offset_right = 16.0
+offset_bottom = 595.0
+color = Color(0.15, 0.13, 0.16, 1)
+
+[node name="ParedDer" type="StaticBody2D" parent="S3_Ascenso"]
+position = Vector2(125, -725)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="S3_Ascenso/ParedDer"]
+shape = SubResource("Shape_chimney_wall")
+
+[node name="ColorRectDer" type="ColorRect" parent="S3_Ascenso/ParedDer"]
+offset_left = -16.0
+offset_top = -725.0
+offset_right = 16.0
+offset_bottom = 725.0
+color = Color(0.15, 0.13, 0.16, 1)
+
+[node name="Roca1" type="StaticBody2D" parent="S3_Ascenso"]
+position = Vector2(-75, -250)
+script = ExtResource("3_crumble")
+
+[node name="Roca2" type="StaticBody2D" parent="S3_Ascenso"]
+position = Vector2(75, -500)
+script = ExtResource("3_crumble")
+
+[node name="Roca3" type="StaticBody2D" parent="S3_Ascenso"]
+position = Vector2(-75, -750)
+script = ExtResource("3_crumble")
+
+[node name="Roca4" type="StaticBody2D" parent="S3_Ascenso"]
+position = Vector2(75, -1000)
+script = ExtResource("3_crumble")
+
+[node name="Murcielago1" parent="S3_Ascenso" instance=ExtResource("7_murc")]
+position = Vector2(75, -350)
+
+[node name="Murcielago2" parent="S3_Ascenso" instance=ExtResource("7_murc")]
+position = Vector2(-75, -900)
+
+[node name="CameraLimits" parent="S3_Ascenso" instance=ExtResource("8_cam")]
+limit_left = -125
+limit_top = -1450
+limit_right = 125
+limit_bottom = 60
+
 [node name="Exit" type="Area2D" parent="."]
-position = Vector2(150, 2570)
+position = Vector2(1375, 1300)
 script = ExtResource("1_exit")
 next_scene_path = "res://src/scenes/Escenario1.tscn"
 

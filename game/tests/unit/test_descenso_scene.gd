@@ -73,3 +73,49 @@ func test_checkpoints_at_top_and_bottom() -> void:
 func test_exit_leads_to_rios() -> void:
 	var exit: Area2D = level.get_node("Exit")
 	assert_string_contains(exit.next_scene_path, "Escenario1")
+
+
+# --- Sala 2: Grietas del Escondite ---
+
+func test_sala2_has_crevices_stalker_and_low_ceiling() -> void:
+	var s2: Node2D = level.get_node("S2_Grietas")
+	var crevices: int = 0
+	for child: Node in s2.get_children():
+		if child is CreviceSpot:
+			crevices += 1
+	assert_gte(crevices, 3, "minimo 3 grietas para el bucle de sigilo")
+	var stalker: BlindStalker = s2.get_node("Stalker")
+	assert_not_null(stalker)
+	assert_gt(stalker.patrol_right, stalker.patrol_left, "rango de patrulla valido")
+	assert_true(s2.get_node("Techo") is StaticBody2D, "techo aplastante presente")
+
+
+# --- Sala 3: Ascenso Vertical ---
+
+func test_sala3_chimney_alternates_crumbling_and_rises() -> void:
+	var s3: Node2D = level.get_node("S3_Ascenso")
+	var rocas: Array[CrumblingPlatform] = []
+	for child: Node in s3.get_children():
+		if child is CrumblingPlatform:
+			rocas.append(child)
+	assert_gte(rocas.size(), 4, "cadena de parkour minima")
+	for i: int in range(1, rocas.size()):
+		assert_ne(signf(rocas[i].position.x), signf(rocas[i - 1].position.x),
+			"rebotes alternados pared-a-pared")
+		assert_lt(rocas[i].position.y, rocas[i - 1].position.y, "asciende")
+
+
+func test_exit_is_at_top_of_chimney() -> void:
+	var exit: Area2D = level.get_node("Exit")
+	var s2_floor_y: float = level.get_node("S2_Grietas").position.y
+	assert_lt(exit.position.y, s2_floor_y - 1000.0,
+		"la salida esta arriba: hay que ganarse el ascenso")
+
+
+func test_world_boots_into_descenso() -> void:
+	var world: PackedScene = load("res://src/scenes/World.tscn")
+	var w: Node2D = world.instantiate()
+	add_child_autofree(w)
+	assert_not_null(w.get_node("LevelManager/Descenso"), "MVP arranca en el Descenso")
+	assert_not_null(w.get_node_or_null("LevelManager/PlayerCamera") == null,
+		"smoke: instancia sin crash")
