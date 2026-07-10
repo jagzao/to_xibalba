@@ -1,0 +1,240 @@
+[gd_scene load_steps=13 format=3 uid="uid://descenso001"]
+
+[ext_resource type="Script" path="res://src/entities/environment/level_exit.gd" id="1_exit"]
+[ext_resource type="PackedScene" uid="uid://checkpoint001" path="res://src/entities/environment/Checkpoint.tscn" id="2_checkpoint"]
+[ext_resource type="Script" path="res://src/entities/environment/crumbling_platform.gd" id="3_crumble"]
+[ext_resource type="Script" path="res://src/entities/environment/acid_pool.gd" id="4_acid"]
+[ext_resource type="Script" path="res://src/entities/environment/wind_current.gd" id="5_wind"]
+[ext_resource type="PackedScene" uid="uid://hazardfloor001" path="res://src/entities/environment/HazardFloor.tscn" id="6_hazard"]
+[ext_resource type="PackedScene" uid="uid://murcielago001" path="res://src/entities/enemies/MurcielagoPeriferia.tscn" id="7_murc"]
+[ext_resource type="PackedScene" uid="uid://cameralimits001" path="res://src/entities/environment/CameraLimits.tscn" id="8_cam"]
+
+[sub_resource type="RectangleShape2D" id="Shape_wall"]
+size = Vector2(32, 2650)
+
+[sub_resource type="RectangleShape2D" id="Shape_floor"]
+size = Vector2(384, 32)
+
+[sub_resource type="RectangleShape2D" id="Shape_stalactite"]
+size = Vector2(56, 320)
+
+[sub_resource type="RectangleShape2D" id="Shape_exit"]
+size = Vector2(48, 48)
+
+[node name="Descenso" type="Node2D"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.04, 0.04, 0.06, 1)
+
+[node name="WallLeft" type="StaticBody2D" parent="."]
+position = Vector2(-176, 1300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeft"]
+shape = SubResource("Shape_wall")
+
+[node name="ColorRect" type="ColorRect" parent="WallLeft"]
+offset_left = -16.0
+offset_top = -1325.0
+offset_right = 16.0
+offset_bottom = 1325.0
+color = Color(0.15, 0.13, 0.16, 1)
+
+[node name="WallRight" type="StaticBody2D" parent="."]
+position = Vector2(176, 1300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRight"]
+shape = SubResource("Shape_wall")
+
+[node name="ColorRect" type="ColorRect" parent="WallRight"]
+offset_left = -16.0
+offset_top = -1325.0
+offset_right = 16.0
+offset_bottom = 1325.0
+color = Color(0.15, 0.13, 0.16, 1)
+
+[node name="A1_Brecha" type="Node2D" parent="."]
+
+[node name="SpawnLedge" type="StaticBody2D" parent="A1_Brecha"]
+position = Vector2(0, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="A1_Brecha/SpawnLedge"]
+shape = SubResource("Shape_floor")
+
+[node name="ColorRect" type="ColorRect" parent="A1_Brecha/SpawnLedge"]
+offset_left = -192.0
+offset_top = -16.0
+offset_right = 192.0
+offset_bottom = 16.0
+color = Color(0.2, 0.2, 0.25, 1)
+
+[node name="Checkpoint" parent="A1_Brecha" instance=ExtResource("2_checkpoint")]
+position = Vector2(0, -40)
+
+[node name="Bifurcacion1" type="StaticBody2D" parent="A1_Brecha"]
+position = Vector2(-110, 380)
+script = ExtResource("3_crumble")
+
+[node name="Bifurcacion2" type="StaticBody2D" parent="A1_Brecha"]
+position = Vector2(110, 380)
+script = ExtResource("3_crumble")
+
+[node name="Murcielago1" parent="A1_Brecha" instance=ExtResource("7_murc")]
+position = Vector2(-140, 220)
+
+[node name="CameraLimits" parent="A1_Brecha" instance=ExtResource("8_cam")]
+limit_left = -176
+limit_top = -90
+limit_right = 176
+limit_bottom = 480
+
+[node name="A2_ZigZag" type="Node2D" parent="."]
+position = Vector2(0, 480)
+
+[node name="Roca1" type="StaticBody2D" parent="A2_ZigZag"]
+position = Vector2(-100, 0)
+script = ExtResource("3_crumble")
+
+[node name="Roca2" type="StaticBody2D" parent="A2_ZigZag"]
+position = Vector2(100, 120)
+script = ExtResource("3_crumble")
+
+[node name="Roca3" type="StaticBody2D" parent="A2_ZigZag"]
+position = Vector2(-100, 240)
+script = ExtResource("3_crumble")
+
+[node name="Roca4" type="StaticBody2D" parent="A2_ZigZag"]
+position = Vector2(100, 360)
+script = ExtResource("3_crumble")
+
+[node name="CameraLimits" parent="A2_ZigZag" instance=ExtResource("8_cam")]
+limit_left = -176
+limit_top = -100
+limit_right = 176
+limit_bottom = 420
+
+[node name="A3_Fosa" type="Node2D" parent="."]
+position = Vector2(0, 980)
+
+[node name="Estalactita" type="StaticBody2D" parent="A3_Fosa"]
+position = Vector2(0, 130)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="A3_Fosa/Estalactita"]
+shape = SubResource("Shape_stalactite")
+
+[node name="ColorRect" type="ColorRect" parent="A3_Fosa/Estalactita"]
+offset_left = -28.0
+offset_top = -160.0
+offset_right = 28.0
+offset_bottom = 160.0
+color = Color(0.18, 0.16, 0.2, 1)
+
+[node name="CornisaIzq" type="StaticBody2D" parent="A3_Fosa"]
+position = Vector2(-140, 200)
+script = ExtResource("3_crumble")
+
+[node name="CornisaDer" type="StaticBody2D" parent="A3_Fosa"]
+position = Vector2(140, 200)
+script = ExtResource("3_crumble")
+
+[node name="Cenote" type="Area2D" parent="A3_Fosa"]
+position = Vector2(0, 400)
+script = ExtResource("4_acid")
+
+[node name="CenoteVisual" type="ColorRect" parent="A3_Fosa/Cenote"]
+offset_left = -64.0
+offset_top = -32.0
+offset_right = 64.0
+offset_bottom = 32.0
+color = Color(0.4, 0.05, 0.1, 0.8)
+
+[node name="Murcielago1" parent="A3_Fosa" instance=ExtResource("7_murc")]
+position = Vector2(140, 40)
+
+[node name="CameraLimits" parent="A3_Fosa" instance=ExtResource("8_cam")]
+limit_left = -176
+limit_top = -100
+limit_right = 176
+limit_bottom = 460
+
+[node name="A4_Ventiscas" type="Node2D" parent="."]
+position = Vector2(0, 1480)
+
+[node name="VientoEmpuje" type="Area2D" parent="A4_Ventiscas"]
+position = Vector2(-100, 60)
+script = ExtResource("5_wind")
+force = Vector2(320, 0)
+
+[node name="VientoVisual1" type="ColorRect" parent="A4_Ventiscas/VientoEmpuje"]
+offset_left = -48.0
+offset_top = -96.0
+offset_right = 48.0
+offset_bottom = 96.0
+color = Color(0.4, 0.6, 0.8, 0.15)
+
+[node name="VientoSuccion" type="Area2D" parent="A4_Ventiscas"]
+position = Vector2(80, 260)
+script = ExtResource("5_wind")
+force = Vector2(0, 450)
+
+[node name="VientoVisual2" type="ColorRect" parent="A4_Ventiscas/VientoSuccion"]
+offset_left = -48.0
+offset_top = -96.0
+offset_right = 48.0
+offset_bottom = 96.0
+color = Color(0.3, 0.4, 0.9, 0.15)
+
+[node name="Pinchos1" parent="A4_Ventiscas" instance=ExtResource("6_hazard")]
+position = Vector2(150, 60)
+
+[node name="Pinchos2" parent="A4_Ventiscas" instance=ExtResource("6_hazard")]
+position = Vector2(-150, 260)
+
+[node name="Roca1" type="StaticBody2D" parent="A4_Ventiscas"]
+position = Vector2(0, 160)
+script = ExtResource("3_crumble")
+
+[node name="CameraLimits" parent="A4_Ventiscas" instance=ExtResource("8_cam")]
+limit_left = -176
+limit_top = -100
+limit_right = 176
+limit_bottom = 420
+
+[node name="A5_Umbral" type="Node2D" parent="."]
+position = Vector2(0, 1980)
+
+[node name="Suelo" type="StaticBody2D" parent="A5_Umbral"]
+position = Vector2(0, 620)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="A5_Umbral/Suelo"]
+shape = SubResource("Shape_floor")
+
+[node name="ColorRect" type="ColorRect" parent="A5_Umbral/Suelo"]
+offset_left = -192.0
+offset_top = -16.0
+offset_right = 192.0
+offset_bottom = 16.0
+color = Color(0.2, 0.2, 0.25, 1)
+
+[node name="Checkpoint" parent="A5_Umbral" instance=ExtResource("2_checkpoint")]
+position = Vector2(-120, 580)
+
+[node name="CameraLimits" parent="A5_Umbral" instance=ExtResource("8_cam")]
+limit_left = -176
+limit_top = -100
+limit_right = 176
+limit_bottom = 660
+
+[node name="Exit" type="Area2D" parent="."]
+position = Vector2(150, 2570)
+script = ExtResource("1_exit")
+next_scene_path = "res://src/scenes/Escenario1.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit"]
+shape = SubResource("Shape_exit")
+
+[node name="ColorRect" type="ColorRect" parent="Exit"]
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+color = Color(0, 0.8, 0.2, 0.5)

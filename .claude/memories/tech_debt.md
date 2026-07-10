@@ -8,7 +8,12 @@
 - Estados nuevos en FSM (CharacterBase.tscn): WallSlideState (clamp caída, resetea fall_distance, wall jump opuesto + facing volteado; entra desde Fall con input hacia pared), HidingState (luz OFF = inaudible; interact entra/sale desde Idle/Move).
 - Entidades nuevas: CrumblingPlatform (pisada → tiembla → colapsa 0.4s → respawn 3s), AcidPool (Serenidad→0 + drenado sangre/s afectado por pánico x1.5), WindCurrent (external_force), CreviceSpot. Enemigo: BlindStalker (ciego, `can_hear()` = no-Hiding && velocity>umbral; embestida quita calavera).
 - Tests: 193/193 (12 nuevos test_mvp_descenso.gd). Gotcha propio: el drenado de ácido lleva x1.5 de pánico — la expectativa del test debe usar PANIC_DAMAGE_MULTIPLIER.
-- Deuda: greybox de las 3 salas del Descenso pendiente (Escenario1.tscn existente es de los ríos); crouch (techo bajo Sala 2) no existe; murciélago modo pasivo-patrulla pendiente; eco posicional del stalker pendiente de AudioManager.
+- Deuda: crouch (techo bajo Sala 2) no existe; murciélago modo pasivo-patrulla pendiente; eco posicional del stalker pendiente de AudioManager.
+
+### Greybox Descenso (mismo día)
+- `game/src/scenes/Descenso.tscn`: pozo vertical 352×2600 con paredes deslizables full-height, 5 cápsulas A1-A5 (bifurcación de desmoronables, zig-zag alternado ×4, estalactita central + cenote ácido, viento empuje+succión con pinchos, umbral con suelo a 2600px que OBLIGA a frenar en pared), checkpoints arriba/abajo, Exit → Escenario1 (ríos). Convenciones de Escenario1.tscn (CanvasModulate, CameraLimits por cápsula, ColorRects).
+- Tests: 202/202 (9 nuevos test_descenso_scene.gd, incluye assert de que el suelo está más hondo que fall_damage_height).
+- Deuda greybox: salas 2 (Grietas+BlindStalker+CreviceSpots) y 3 (Ascenso) no montadas en escena aún — entidades listas; falta ruta en World/MainMenu hacia Descenso.tscn como primer nivel.
 
 ## Sesión 2026-07-08: batches A/B/C
 
