@@ -34,6 +34,7 @@ func _spawn_player() -> void:
 		push_error("LevelManager: escena instanciada no es CharacterBase")
 		return
 	player.data = data
+	player.add_to_group("player")
 	add_child(player)
 	# ponytail: la cámara sigue al jugador; límites por sala los maneja CameraLimits
 	var camera := Camera2D.new()

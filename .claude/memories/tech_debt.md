@@ -15,6 +15,13 @@
 - Tests: 202/202 (9 nuevos test_descenso_scene.gd, incluye assert de que el suelo está más hondo que fall_damage_height).
 - Deuda greybox: salas 2 (Grietas+BlindStalker+CreviceSpots) y 3 (Ascenso) no montadas en escena aún — entidades listas; falta ruta en World/MainMenu hacia Descenso.tscn como primer nivel.
 
+### Atmósfera reactiva (mismo día)
+- `game/src/effects/reactive_glyph.gd` (ReactiveGlyph extends PointLight2D: `target_energy()` = proximidad × luz del jugador (serenidad/max), lerp progresivo, textura radial generada por código) y `game/src/effects/fog_layer.gd` (FogLayer: CPUParticles2D con drift que HUYE del velocity del jugador y regresa a base_drift). Ambos buscan al jugador por grupo "player".
+- FIX RAÍZ: LevelManager ahora hace `player.add_to_group("player")` — BatHouse/glifos/niebla lo buscaban por grupo y NADIE lo agregaba en juego real (solo los tests a mano).
+- Descenso.tscn: nodo Atmosfera con 6 ReactiveGlyphs a lo largo del pozo + 3 FogLayers (fosa, ventiscas, grietas, z_index 10 = por delante del gameplay).
+- Aclaración de diseño para el humano: cápsulas (5 secciones del nivel) ≠ capas (apilado visual por sección: parallax/pintura/glifos/gameplay/niebla). Los fondos A1-A5 se integran como Sprite2D z-10 cuando el humano suba los PNGs.
+- Tests: 212/212 (6 nuevos).
+
 ### Salas 2 y 3 + boot al Descenso (mismo día)
 - Descenso.tscn ahora es el MVP completo: pared derecha recortada (puerta en y2450-2600) → S2_Grietas (pasillo x176-1506, techo bajo a -130, 3 CreviceSpots, BlindStalker patrulla abs 400-1300) → S3_Ascenso (chimenea x1250-1500, 4 desmoronables alternadas ascendentes, 2 murciélagos en ángulos muertos, Exit arriba en y1300 → Escenario1).
 - World.tscn arranca en Descenso (era Escenario1). Flujo MVP: MainMenu → World(LevelManager) → Descenso → Escenario1 ríos → CouncilRoom.

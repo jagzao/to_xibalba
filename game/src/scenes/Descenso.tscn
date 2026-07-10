@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://descenso001"]
+[gd_scene load_steps=20 format=3 uid="uid://descenso001"]
 
 [ext_resource type="Script" path="res://src/entities/environment/level_exit.gd" id="1_exit"]
 [ext_resource type="PackedScene" uid="uid://checkpoint001" path="res://src/entities/environment/Checkpoint.tscn" id="2_checkpoint"]
@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://cameralimits001" path="res://src/entities/environment/CameraLimits.tscn" id="8_cam"]
 [ext_resource type="Script" path="res://src/entities/environment/crevice_spot.gd" id="9_crevice"]
 [ext_resource type="Script" path="res://src/entities/enemies/blind_stalker.gd" id="10_stalker"]
+[ext_resource type="Script" path="res://src/effects/reactive_glyph.gd" id="11_glyph"]
+[ext_resource type="Script" path="res://src/effects/fog_layer.gd" id="12_fog"]
 
 [sub_resource type="RectangleShape2D" id="Shape_wall"]
 size = Vector2(32, 2650)
@@ -375,6 +377,47 @@ limit_left = -125
 limit_top = -1450
 limit_right = 125
 limit_bottom = 60
+
+[node name="Atmosfera" type="Node2D" parent="."]
+
+[node name="Glifo1" type="PointLight2D" parent="Atmosfera"]
+position = Vector2(-160, 250)
+script = ExtResource("11_glyph")
+
+[node name="Glifo2" type="PointLight2D" parent="Atmosfera"]
+position = Vector2(160, 620)
+script = ExtResource("11_glyph")
+
+[node name="Glifo3" type="PointLight2D" parent="Atmosfera"]
+position = Vector2(-160, 1100)
+script = ExtResource("11_glyph")
+
+[node name="Glifo4" type="PointLight2D" parent="Atmosfera"]
+position = Vector2(160, 1620)
+script = ExtResource("11_glyph")
+
+[node name="Glifo5" type="PointLight2D" parent="Atmosfera"]
+position = Vector2(-160, 2150)
+script = ExtResource("11_glyph")
+
+[node name="Glifo6" type="PointLight2D" parent="Atmosfera"]
+position = Vector2(160, 2450)
+script = ExtResource("11_glyph")
+
+[node name="NieblaFosa" type="Node2D" parent="Atmosfera"]
+position = Vector2(0, 1200)
+script = ExtResource("12_fog")
+z_index = 10
+
+[node name="NieblaVentiscas" type="Node2D" parent="Atmosfera"]
+position = Vector2(0, 1700)
+script = ExtResource("12_fog")
+z_index = 10
+
+[node name="NieblaGrietas" type="Node2D" parent="Atmosfera"]
+position = Vector2(800, 2540)
+script = ExtResource("12_fog")
+z_index = 10
 
 [node name="Exit" type="Area2D" parent="."]
 position = Vector2(1375, 1300)
